@@ -790,7 +790,9 @@
       };
     </script>
 
-    <!-- <script>
+  
+   <!-- Updated login form script with Turnstile refresh on error -->
+<script>
 $("#login-form").on("submit", async function (e) {
   e.preventDefault();
 
@@ -798,67 +800,13 @@ $("#login-form").on("submit", async function (e) {
   const email    = $("#email").val().trim();
   const password = $("#password").val();
 
-  const turnstileToken = form.querySelector("[name='cf-turnstile-response']")?.value;
+  // ── Turnstile token ──
+  const turnstileToken = form.querySelector(
+    "[name='cf-turnstile-response']",
+  )?.value;
   if (!turnstileToken) {
     return showToast("⚠️ Please complete the captcha.", false);
   }
-
-  if (!email || !password) {
-    return showToast("Email and password are required", "error");
-  }
-
-  const submitButton       = $(this).find('button[type="submit"]');
-  const originalButtonHtml = submitButton.html();
-  submitButton.prop("disabled", true).html("Checking credentials...");
-
-  try {
-    const res = await fetch("/api/login", {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, "cf-turnstile-response": turnstileToken }),
-    });
-
-    const result = await res.json();
-    submitButton.prop("disabled", false).html(originalButtonHtml);
-
-    if (!res.ok) {
-      return showToast(result.message || "Login failed", "error");
-    }
-
-    showToast("Login successful! Redirecting...", "success");
-    setTimeout(() => {
-      window.location.href = "/dashboard";
-    }, 1200);
-
-  } catch (err) {
-    console.error(err);
-    submitButton.prop("disabled", false).html(originalButtonHtml);
-    showToast("Server error. Please try again.", "error");
-  }
-});
-</script> -->
-
-   <script>
-    // Replace the existing login form submit <script> in login.html
-
-$("#login-form").on("submit", async function (e) {
-  e.preventDefault();
-
-    const form = this;   // <-- ADD THIS
-
-
-
-  const email    = $("#email").val().trim();
-  const password = $("#password").val();
-
-  // ── Turnstile token ──
-    const turnstileToken = form.querySelector(
-      "[name='cf-turnstile-response']",
-    )?.value;
-    if (!turnstileToken) {
-      return showToast("⚠️ Please complete the captcha.", false);
-    }
 
   if (!email || !password) {
     showToast("Email and password are required", "error");
@@ -883,6 +831,10 @@ $("#login-form").on("submit", async function (e) {
 
     if (!res.ok) {
       showToast(result.message || "Login failed", "error");
+      // ✅ REFRESH CAPTCHA ON ERROR
+      if (window.turnstile) {
+        window.turnstile.reset();
+      }
       return;
     }
 
@@ -899,35 +851,18 @@ $("#login-form").on("submit", async function (e) {
     console.error(err);
     submitButton.prop("disabled", false).html(originalButtonHtml);
     showToast("Server error. Please try again.", "error");
+    // ✅ REFRESH CAPTCHA ON ERROR
+    if (window.turnstile) {
+      window.turnstile.reset();
+    }
   }
 });
-   </script>
-
-
-   <!-- <script>
-      // login-register-protect.js
-      async function redirectIfLoggedIn() {
-        try {
-          const res = await fetch("/api/user/check-auth", {
-            credentials: "include",
-          });
-
-          if (res.ok) {
-            // Already logged in → go to dashboard
-            window.location.href = "/dashboard/index.html";
-          }
-        } catch (err) {
-          // Not logged in → stay on page
-        }
-      }
-
-      redirectIfLoggedIn();
-    </script> -->
+</script>
 
 <!-- Smartsupp Live Chat script -->
 <script type="text/javascript">
 var _smartsupp = _smartsupp || {};
-_smartsupp.key = '2c1c4a3ba72d6bfba693a53d84996327340108bd';
+_smartsupp.key = 'c80c66c88a121177daed1c27f1dd647c0889e7f3';
 window.smartsupp||(function(d) {
   var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
   s=d.getElementsByTagName('script')[0];c=d.createElement('script');

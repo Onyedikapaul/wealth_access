@@ -49,6 +49,7 @@ const allowedOrigins = [
   "http://127.0.0.1:5500",
   "https://wealth-access-intl.pro",
   "https://www.wealth-access-intl.pro",
+  "https://wealthaccess-production.up.railway.app"
 ];
 
 // Middleware

@@ -41,7 +41,7 @@ const internationalTransferSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["pending", "processing", "completed", "cancelled", "failed"],
+    enum: ["pending", "processing", "completed", "successful", "cancelled", "failed"],
     default: "pending",
   },
   adminNote: {

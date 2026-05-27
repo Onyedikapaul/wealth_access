@@ -121,6 +121,11 @@ TransferRouter.post("/local", checkAuth, requireKYC, async (req, res) => {
         .status(400)
         .json({ success: false, message: "Insufficient account balance." });
 
+    // ── Deduct balance immediately and mark as completed ──
+    const balanceBefore = user.balance; // snapshot FIRST
+    user.balance -= parsedAmount;
+    await user.save();
+
     // ── NO balance deduction here — stays pending until admin approves ──
     const reference = `LT-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
 
@@ -134,16 +139,16 @@ TransferRouter.post("/local", checkAuth, requireKYC, async (req, res) => {
       routing_number: routing_number || "",
       swift_code: swift_code || "",
       description: Description || "",
-      balanceBefore: user.balance, // snapshot for admin reference
+      balanceBefore: balanceBefore, // snapshot for admin reference
       balanceAfter: user.balance, // same — no deduction yet
-      status: "pending", // ← pending, not completed
+      status: "successful",
       reference,
     });
     await transfer.save();
 
     res.json({
       success: true,
-      message: "Transfer submitted successfully and is pending approval.",
+      message: "Transfer completed successfully.",
       reference: transfer.reference,
     });
   } catch (err) {

@@ -300,7 +300,7 @@ async function submitTransfer(alpineData, processingModal) {
         swift_code: alpineData.swift_code,
         description: alpineData.Description,
         amount: alpineData.amount,
-        status: data.status || "pending",
+        status: data.status || "successful",
         createdAt: new Date().toISOString(),
         message: data.message,
       };
@@ -363,19 +363,20 @@ function showReceiptModal(txn) {
         });
   const cap = (str) => (str ? str.charAt(0).toUpperCase() + str.slice(1) : "—");
 
-  const statusClass = (s) =>
-    ({
-      completed: "bg-emerald-100 text-emerald-700",
-      pending: "bg-amber-100 text-amber-700",
-      failed: "bg-red-100 text-red-700",
-    })[s] || "bg-gray-100 text-gray-600";
+ // updated
+const statusClass = (s) =>
+  ({
+    successful: "bg-emerald-100 text-emerald-700",
+    pending: "bg-amber-100 text-amber-700",
+    failed: "bg-red-100 text-red-700",
+  })[s] || "bg-gray-100 text-gray-600";
 
-  const dotClass = (s) =>
-    ({
-      completed: "bg-emerald-500",
-      pending: "bg-amber-500",
-      failed: "bg-red-500",
-    })[s] || "bg-gray-400";
+const dotClass = (s) =>
+  ({
+    successful: "bg-emerald-500",
+    pending: "bg-amber-500",
+    failed: "bg-red-500",
+  })[s] || "bg-gray-400";
 
   const optRow = (label, value) =>
     value && String(value).trim() !== ""
@@ -522,6 +523,7 @@ function downloadTransferReceiptPdf(txn) {
   doc.text(fmtPdf(txn.amount), 20, 53);
 
   const statusColors = {
+      successful: [16, 185, 129],
     completed: [16, 185, 129],
     approved: [16, 185, 129],
     pending: [245, 158, 11],
@@ -648,7 +650,7 @@ function showToast(message, type = "info") {
 // ─── Init ─────────────────────────────────────────────────────────────────────
 // ─── Init ─────────────────────────────────────────────────────────────────────
 window.requestOTP = requestOTP;
-window.downloadTransferReceiptPdf = downloadTransferReceiptPdf; 
+window.downloadTransferReceiptPdf = downloadTransferReceiptPdf;
 
 document.addEventListener("DOMContentLoaded", function () {
   loadTransferPageData();

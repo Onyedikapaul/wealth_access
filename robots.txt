@@ -1,0 +1,8 @@
+Dashboard (overview)
+Products
+Orders
+Deliveries
+Shop Settings
+Verify Identity
+
+npx prisma migrate dev --name add_onboarding_complete

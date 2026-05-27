@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Add Transactions | Admin Dashboard</title>
+    <link rel="icon" href="/assets/images/logo.png" />
+
+    <link rel="stylesheet" href="/admin/owner/dashboard/css/layout.css" />
+
+    <style>
+      /* Page-specific styles for the seed form */
+      .seed-card {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 24px;
+        max-width: 640px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+      .seed-card h2 {
+        margin: 0 0 4px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #111827;
+      }
+      .seed-card .seed-subtitle {
+        color: #6b7280;
+        font-size: 0.85rem;
+        margin: 0 0 20px;
+      }
+      .seed-field {
+        margin-bottom: 18px;
+      }
+      .seed-field label {
+        display: block;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 6px;
+      }
+      .seed-type-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .seed-type-option {
+        position: relative;
+        border: 2px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 14px;
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.15s ease;
+        user-select: none;
+      }
+      .seed-type-option:hover {
+        border-color: #93c5fd;
+        background: #eff6ff;
+      }
+      .seed-type-option.active {
+        border-color: #2563eb;
+        background: #eff6ff;
+      }
+      .seed-type-option i {
+        display: block;
+        font-size: 1.4rem;
+        color: #2563eb;
+        margin-bottom: 6px;
+      }
+      .seed-type-option .label {
+        font-weight: 600;
+        font-size: 0.88rem;
+        color: #111827;
+      }
+      .seed-type-option .desc {
+        font-size: 0.72rem;
+        color: #6b7280;
+        margin-top: 2px;
+      }
+      .seed-type-option input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .seed-count-wrap {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .seed-count-input {
+        flex: 1;
+      }
+      .seed-count-number {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #2563eb;
+        min-width: 32px;
+        text-align: center;
+      }
+      .seed-count-input input[type="range"] {
+        width: 100%;
+        accent-color: #2563eb;
+      }
+      .seed-count-quick {
+        display: flex;
+        gap: 6px;
+        margin-top: 8px;
+      }
+      .seed-count-quick button {
+        flex: 1;
+        padding: 6px 0;
+        font-size: 0.75rem;
+        background: #f3f4f6;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        color: #374151;
+        cursor: pointer;
+      }
+      .seed-count-quick button:hover {
+        background: #e5e7eb;
+      }
+
+      .seed-info {
+        background: #f9fafb;
+        border-left: 3px solid #2563eb;
+        padding: 10px 12px;
+        border-radius: 6px;
+        font-size: 0.78rem;
+        color: #4b5563;
+        margin-bottom: 16px;
+      }
+      .seed-info ul {
+        margin: 4px 0 0 16px;
+        padding: 0;
+      }
+      .seed-info li {
+        margin: 2px 0;
+      }
+
+      .seed-submit {
+        width: 100%;
+        padding: 12px;
+        background: #2563eb;
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.9rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.15s ease;
+      }
+      .seed-submit:hover:not(:disabled) {
+        background: #1d4ed8;
+      }
+      .seed-submit:disabled {
+        background: #93c5fd;
+        cursor: not-allowed;
+      }
+
+      .seed-result {
+        margin-top: 16px;
+        padding: 14px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        display: none;
+      }
+      .seed-result.success {
+        background: #ecfdf5;
+        border: 1px solid #6ee7b7;
+        color: #065f46;
+        display: block;
+      }
+      .seed-result.error {
+        background: #fef2f2;
+        border: 1px solid #fca5a5;
+        color: #991b1b;
+        display: block;
+      }
+      .seed-result strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+      .seed-result .summary {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px 14px;
+        margin-top: 8px;
+        font-size: 0.78rem;
+      }
+      .seed-result .summary span {
+        color: #047857;
+      }
+
+      .seed-user-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        color: #1e40af;
+        margin-bottom: 16px;
+      }
+      .seed-user-pill code {
+        font-family: ui-monospace, monospace;
+        font-size: 0.78rem;
+      }
+
+      @media (max-width: 600px) {
+        .seed-card { padding: 18px; }
+        .seed-type-group { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header id="topnav-mount"></header>
+
+    <div class="admin-shell">
+
+      <main class="admin-main">
+        <div class="admin-container" style="margin-top: 50px">
+          <h1 style="margin-bottom: 4px;">Add Random Transactions</h1>
+          <p style="color: #6b7280; margin-top: 0; margin-bottom: 24px; font-size: 0.9rem;">
+            Generate random credit/debit transactions for testing or demo purposes.
+          </p>
+
+          <div class="seed-user-pill" id="seed-user-pill" style="display:none;">
+            <i class="fa-solid fa-user"></i>
+            User ID: <code id="seed-user-id"></code>
+          </div>
+
+          <div class="seed-card">
+            <h2>Transaction Generator</h2>
+            <p class="seed-subtitle">
+              Choose transaction type and how many to generate. Amounts will range from
+              $20,000 to $900,000, dates from 2021 to today.
+            </p>
+
+            <!-- TYPE PICKER -->
+            <div class="seed-field">
+              <label>Transaction Type</label>
+              <div class="seed-type-group">
+                <label class="seed-type-option active" data-type="local">
+                  <input type="radio" name="seed-type" value="local" checked />
+                  <i class="fa-solid fa-building-columns"></i>
+                  <div class="label">Local Transfer</div>
+                  <div class="desc">US bank transfers</div>
+                </label>
+                <label class="seed-type-option" data-type="international">
+                  <input type="radio" name="seed-type" value="international" />
+                  <i class="fa-solid fa-globe"></i>
+                  <div class="label">International</div>
+                  <div class="desc">Wire, PayPal, Wise, etc.</div>
+                </label>
+              </div>
+            </div>
+
+            <!-- COUNT SLIDER -->
+            <div class="seed-field">
+              <label for="seed-count">
+                How many? <span class="seed-count-number" id="seed-count-display">10</span>
+              </label>
+              <div class="seed-count-wrap">
+                <div class="seed-count-input">
+                  <input
+                    type="range"
+                    id="seed-count"
+                    min="1"
+                    max="20"
+                    value="10"
+                  />
+                </div>
+              </div>
+              <div class="seed-count-quick">
+                <button type="button" data-count="5">5</button>
+                <button type="button" data-count="10">10</button>
+                <button type="button" data-count="15">15</button>
+                <button type="button" data-count="20">20</button>
+              </div>
+            </div>
+
+            <div class="seed-info">
+              <strong>What this will do:</strong>
+              <ul>
+                <li>Generate random credit & debit transactions</li>
+                <li>Amounts between $20,000 - $900,000</li>
+                <li>Dates randomly distributed from 2021 to today</li>
+                <li>All transactions marked as <strong>completed</strong></li>
+                <li>User's balance will be updated based on net flow</li>
+              </ul>
+            </div>
+
+            <button type="button" class="seed-submit" id="seed-submit-btn">
+              <i class="fa-solid fa-bolt"></i>
+              Generate Transactions
+            </button>
+
+            <div class="seed-result" id="seed-result"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <footer id="footer-mount"></footer>
+
+    <script src="/admin-script/admin-auth-required.js"></script>
+    <script src="/admin-script/admin-logout.js"></script>
+    <script src="/admin-script/admin-layout.js"></script>
+
+    <script>
+      (function () {
+        // ─── Get user ID from URL params ─────────────────────────
+        const userId = new URLSearchParams(window.location.search).get("userId");
+
+        const pill = document.getElementById("seed-user-pill");
+        const pillId = document.getElementById("seed-user-id");
+        if (userId) {
+          pill.style.display = "inline-flex";
+          pillId.textContent = userId;
+        }
+
+        // ─── Type radio toggle ───────────────────────────────────
+        const typeOptions = document.querySelectorAll(".seed-type-option");
+        typeOptions.forEach((opt) => {
+          opt.addEventListener("click", () => {
+            typeOptions.forEach((o) => o.classList.remove("active"));
+            opt.classList.add("active");
+            const radio = opt.querySelector("input[type='radio']");
+            if (radio) radio.checked = true;
+          });
+        });
+
+        // ─── Count slider ────────────────────────────────────────
+        const countInput = document.getElementById("seed-count");
+        const countDisplay = document.getElementById("seed-count-display");
+        countInput.addEventListener("input", () => {
+          countDisplay.textContent = countInput.value;
+        });
+
+        // Quick count buttons
+        document.querySelectorAll(".seed-count-quick button").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const c = btn.dataset.count;
+            countInput.value = c;
+            countDisplay.textContent = c;
+          });
+        });
+
+        // ─── Submit ──────────────────────────────────────────────
+        const submitBtn = document.getElementById("seed-submit-btn");
+        const resultBox = document.getElementById("seed-result");
+
+        const fmtUSD = (n) =>
+          Number(n || 0).toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+
+        async function submitSeed() {
+          if (!userId) {
+            resultBox.className = "seed-result error";
+            resultBox.innerHTML = `
+              <strong><i class="fa-solid fa-triangle-exclamation"></i> Missing user ID</strong>
+              Add ?userId=... to the URL.
+            `;
+            return;
+          }
+
+          const type = document.querySelector(
+            "input[name='seed-type']:checked"
+          ).value;
+          const count = Number(countInput.value);
+
+          if (!confirm(
+            `Generate ${count} ${type} transaction(s)?\n\nThis will modify the user's balance.`
+          )) {
+            return;
+          }
+
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Generating...`;
+          resultBox.style.display = "none";
+          resultBox.className = "seed-result";
+          resultBox.innerHTML = "";
+
+          try {
+            const res = await fetch(
+              `/api/admin/users/${encodeURIComponent(userId)}/seed-transactions`,
+              {
+                method: "POST",
+                credentials: "include",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ type, count }),
+              }
+            );
+
+            const data = await res.json();
+
+            if (!res.ok || !data.success) {
+              resultBox.className = "seed-result error";
+              resultBox.innerHTML = `
+                <strong><i class="fa-solid fa-triangle-exclamation"></i> Failed</strong>
+                ${data.message || `HTTP ${res.status}`}
+              `;
+              return;
+            }
+
+            const s = data.summary || {};
+            resultBox.className = "seed-result success";
+            resultBox.innerHTML = `
+              <strong><i class="fa-solid fa-circle-check"></i> ${data.message}</strong>
+              <div class="summary">
+                <span>Credits:</span><span>${fmtUSD(s.credits)}</span>
+                <span>Debits:</span><span>${fmtUSD(s.debits)}</span>
+                <span>Net change:</span><span>${s.netChange >= 0 ? "+" : ""}${fmtUSD(s.netChange)}</span>
+                <span>New balance:</span><span><strong>${fmtUSD(s.newBalance)}</strong></span>
+              </div>
+            `;
+          } catch (err) {
+            console.error(err);
+            resultBox.className = "seed-result error";
+            resultBox.innerHTML = `
+              <strong><i class="fa-solid fa-triangle-exclamation"></i> Network error</strong>
+              ${err.message}
+            `;
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `<i class="fa-solid fa-bolt"></i> Generate Transactions`;
+          }
+        }
+
+        submitBtn.addEventListener("click", submitSeed);
+      })();
+    </script>
+  </body>
+</html>

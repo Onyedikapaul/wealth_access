@@ -1,0 +1,1173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wealth Access — Your Gateway to Global Finance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" href="/assets/images/logo.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --accent: #0ea5e9;
+        --accent-light: #38bdf8;
+        --accent-pale: #ede9fe;
+        --accent-border: #c4b5fd;
+        --dark: #0f172a;
+        --dark-2: #1e293b;
+        --dark-3: #334155;
+        --light: #f8fafc;
+        --light-2: #f1f5f9;
+        --white: #ffffff;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --text-muted: #94a3b8;
+        --border: #e2e8f0;
+      }
+      html {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: var(--white);
+        color: var(--text-primary);
+        overflow-x: hidden;
+      }
+
+      /* ── NAV ── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 5%;
+        background: rgba(248, 250, 252, 0.92);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        font-weight: 700;
+      }
+      .logo-mark {
+        width: 36px;
+        height: 36px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-light));
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Syne", sans-serif;
+        font-size: 1rem;
+        color: #fff;
+        font-weight: 700;
+      }
+      .logo-text {
+        font-family: "Syne", sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+      .logo-text em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+      .nav-links a {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--accent);
+      }
+      .nav-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .btn-secondary {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        background: none;
+        border: 1.5px solid var(--border);
+        padding: 0.5rem 1.2rem;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: all 0.2s;
+        cursor: pointer;
+      }
+      .btn-secondary:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .btn-primary {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #fff;
+        background: var(--accent);
+        border: none;
+        padding: 0.55rem 1.4rem;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: all 0.2s;
+        cursor: pointer;
+      }
+      .btn-primary:hover {
+        background: var(--accent-light);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(109, 40, 217, 0.25);
+      }
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        background: none;
+        border: none;
+      }
+      .hamburger span {
+        width: 22px;
+        height: 2px;
+        background: var(--text-primary);
+        transition: all 0.3s;
+      }
+
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: var(--white);
+        z-index: 9999;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+      }
+      .mobile-menu.open {
+        display: flex;
+      }
+      .mobile-close {
+        position: absolute;
+        top: 1.5rem;
+        right: 5%;
+        background: none;
+        border: none;
+        font-size: 1.8rem;
+        cursor: pointer;
+        color: var(--text-primary);
+      }
+      .mobile-menu a {
+        font-family: "Syne", sans-serif;
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        text-decoration: none;
+      }
+      .mobile-menu a:hover {
+        color: var(--accent);
+      }
+
+      /* ── HERO ── */
+      .hero {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: stretch;
+        padding-top: 68px;
+        overflow: hidden;
+      }
+      .hero-left {
+        padding: 5rem 5% 5rem 8%;
+        background: linear-gradient(135deg, var(--light) 0%, var(--light-2) 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+      }
+      .hero-left::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: -40px;
+        bottom: 0;
+        width: 80px;
+        background: linear-gradient(135deg, var(--light) 0%, var(--light-2) 100%);
+        clip-path: polygon(0 0, 50% 0, 100% 50%, 50% 100%, 0 100%);
+        z-index: 2;
+      }
+      .hero-right {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+      }
+      .hero-right::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="20" cy="80" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+        background-size: 100px 100px;
+      }
+      .hero-right img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        opacity: 0.9;
+      }
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--white);
+        border: 1.5px solid var(--accent-border);
+        color: var(--accent);
+        padding: 0.45rem 1rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 1.8rem;
+        box-shadow: 0 4px 12px rgba(109, 40, 217, 0.08);
+      }
+      .badge-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--accent);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.4; }
+      }
+      .hero h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+        font-weight: 700;
+        line-height: 1.1;
+        color: var(--text-primary);
+        margin-bottom: 1.2rem;
+      }
+      .hero h1 em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .hero-sub {
+        font-size: 0.95rem;
+        font-weight: 400;
+        color: var(--text-secondary);
+        line-height: 1.8;
+        margin-bottom: 2.5rem;
+        max-width: 420px;
+      }
+      .hero-btns {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 3rem;
+      }
+      .btn-hero-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--accent);
+        color: #fff;
+        font-family: "Inter", sans-serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        padding: 0.95rem 2rem;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        border-radius: 6px;
+        transition: all 0.3s;
+      }
+      .btn-hero-primary:hover {
+        background: var(--accent-light);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 32px rgba(109, 40, 217, 0.3);
+      }
+      .btn-hero-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: transparent;
+        color: var(--text-primary);
+        font-family: "Inter", sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 0.95rem 1.8rem;
+        text-decoration: none;
+        border: 1.5px solid var(--border);
+        cursor: pointer;
+        border-radius: 6px;
+        transition: all 0.3s;
+      }
+      .btn-hero-secondary:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .hero-proof {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border);
+      }
+      .proof-avatars {
+        display: flex;
+      }
+      .proof-avatars img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 2px solid var(--white);
+        margin-left: -8px;
+        object-fit: cover;
+      }
+      .proof-avatars img:first-child {
+        margin-left: 0;
+      }
+      .proof-text {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+      }
+      .proof-text strong {
+        color: var(--text-primary);
+        font-weight: 700;
+      }
+
+      /* ── MARQUEE ── */
+      .marquee-strip {
+        background: var(--dark);
+        padding: 0.8rem 0;
+        overflow: hidden;
+      }
+      .marquee-track {
+        display: flex;
+        gap: 2rem;
+        animation: marquee 20s linear infinite;
+        white-space: nowrap;
+      }
+      @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      .marquee-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.4);
+        flex-shrink: 0;
+      }
+      .marquee-dot {
+        width: 4px;
+        height: 4px;
+        background: var(--accent);
+        border-radius: 50%;
+      }
+
+      /* ── STATS ── */
+      .stats-section {
+        background: var(--white);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        padding: 4rem 5%;
+      }
+      .stats-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+      }
+      .stat-item {
+        padding: 2rem;
+        border-right: 1px solid var(--border);
+        text-align: center;
+      }
+      .stat-item:last-child {
+        border-right: none;
+      }
+      .stat-num {
+        font-family: "Syne", sans-serif;
+        font-size: 2.6rem;
+        font-weight: 700;
+        color: var(--accent);
+        line-height: 1;
+      }
+      .stat-label {
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-top: 0.4rem;
+        font-weight: 600;
+      }
+
+      /* ── FEATURES ── */
+      .features-section {
+        padding: 6rem 5%;
+        background: var(--light);
+      }
+      .features-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .features-header {
+        margin-bottom: 4rem;
+      }
+      .section-tag {
+        font-size: 0.68rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+        margin-bottom: 0.8rem;
+      }
+      .section-h2 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.8rem, 3vw, 2.6rem);
+        font-weight: 700;
+        color: var(--text-primary);
+        line-height: 1.2;
+        margin-bottom: 1rem;
+      }
+      .section-h2 em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .section-desc {
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+        max-width: 500px;
+        line-height: 1.7;
+      }
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.8rem;
+      }
+      .feat-card {
+        padding: 2rem;
+        border: 1px solid var(--border);
+        background: var(--white);
+        border-radius: 8px;
+        transition: all 0.3s;
+      }
+      .feat-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--accent);
+        box-shadow: 0 12px 32px rgba(109, 40, 217, 0.1);
+      }
+      .feat-num {
+        font-family: "Syne", sans-serif;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        letter-spacing: 0.1em;
+        margin-bottom: 1rem;
+        font-weight: 700;
+      }
+      .feat-icon {
+        width: 44px;
+        height: 44px;
+        background: var(--accent-pale);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+      }
+      .feat-icon svg {
+        width: 20px;
+        height: 20px;
+        stroke: var(--accent);
+        fill: none;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+      }
+      .feat-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.6rem;
+      }
+      .feat-desc {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+      }
+
+      /* ── HOW IT WORKS ── */
+      .how-section {
+        padding: 6rem 5%;
+        background: var(--white);
+      }
+      .how-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .how-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+        margin-top: 3rem;
+      }
+      .how-img {
+        width: 100%;
+        height: 450px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .steps {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+      .step-item {
+        display: flex;
+        gap: 1.4rem;
+        align-items: flex-start;
+      }
+      .step-num {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        background: var(--accent-pale);
+        border: 2px solid var(--accent);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Syne", sans-serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--accent);
+      }
+      .step-content h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.4rem;
+      }
+      .step-content p {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      /* ── TESTIMONIALS ── */
+      .testi-section {
+        padding: 6rem 5%;
+        background: var(--light);
+      }
+      .testi-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .testi-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.6rem;
+        margin-top: 3rem;
+      }
+      .testi-card {
+        background: var(--white);
+        border: 1px solid var(--border);
+        padding: 2rem;
+        border-radius: 8px;
+        transition: all 0.3s;
+      }
+      .testi-card:hover {
+        border-color: var(--accent);
+        box-shadow: 0 8px 24px rgba(109, 40, 217, 0.08);
+      }
+      .testi-stars {
+        color: var(--accent);
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+        margin-bottom: 1rem;
+      }
+      .testi-text {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+        font-style: italic;
+      }
+      .testi-author {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border);
+      }
+      .author-img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .author-name {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+      .author-role {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+      }
+
+      /* ── CTA ── */
+      .cta-section {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+        padding: 5rem;
+        text-align: center;
+        border-radius: 12px;
+        margin: 6rem 5% 0;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .cta-content {
+        position: relative;
+        z-index: 1;
+      }
+      .cta-title {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.8rem, 3vw, 2.8rem);
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 1rem;
+        line-height: 1.1;
+      }
+      .cta-sub {
+        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.85);
+        margin-bottom: 2rem;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.7;
+      }
+      .cta-btns {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .btn-cta-light {
+        background: #fff;
+        color: var(--accent);
+        font-weight: 700;
+        padding: 0.9rem 2rem;
+        text-decoration: none;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 0.85rem;
+      }
+      .btn-cta-light:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      }
+      .btn-cta-border {
+        background: transparent;
+        color: #fff;
+        border: 1.5px solid rgba(255, 255, 255, 0.4);
+        padding: 0.9rem 2rem;
+        text-decoration: none;
+        cursor: pointer;
+        border-radius: 6px;
+        transition: all 0.3s;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+      .btn-cta-border:hover {
+        border-color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        background: var(--dark);
+        padding: 4.5rem 5% 2.5rem;
+        margin-top: 6rem;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 2.2fr 1fr 1fr 1fr;
+        gap: 3rem;
+        max-width: 1200px;
+        margin: 0 auto 3rem;
+      }
+      .footer-brand {
+        font-family: "Syne", sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #fff;
+      }
+      .footer-brand em {
+        color: var(--accent-light);
+      }
+      .footer-tagline {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.5);
+        line-height: 1.6;
+        margin-top: 0.8rem;
+      }
+      .footer-col h4 {
+        font-family: "Syne", sans-serif;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+      .footer-col ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+      .footer-col ul a {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.5);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .footer-col ul a:hover {
+        color: var(--accent-light);
+      }
+      .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 1.8rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .footer-copy {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.3);
+      }
+      .footer-legal {
+        display: flex;
+        gap: 1.5rem;
+      }
+      .footer-legal a {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.3);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .footer-legal a:hover {
+        color: var(--accent-light);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 1024px) {
+        .hero { grid-template-columns: 1fr; }
+        .hero-right { display: none; }
+        .features-grid { grid-template-columns: repeat(2, 1fr); }
+        .how-grid { grid-template-columns: 1fr; }
+        .testi-grid { grid-template-columns: repeat(2, 1fr); }
+        .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      }
+      @media (max-width: 768px) {
+        nav { padding: 0.8rem 5%; }
+        .nav-links, .nav-actions { display: none; }
+        .hamburger { display: flex; }
+        .features-grid { grid-template-columns: 1fr; }
+        .testi-grid { grid-template-columns: 1fr; }
+        .footer-grid { grid-template-columns: 1fr; }
+        .footer-bottom { flex-direction: column; text-align: center; }
+        .cta-section { margin: 3rem 5% 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mobile-menu" id="mobileMenu">
+      <button class="mobile-close" onclick="closeMobileMenu()">✕</button>
+      <a href="#features" onclick="closeMobileMenu()">Features</a>
+      <a href="#how" onclick="closeMobileMenu()">How It Works</a>
+      <a href="#testimonials" onclick="closeMobileMenu()">Reviews</a>
+      <a href="./contact.html" onclick="closeMobileMenu()">Contact</a>
+      <a href="./register.html" style="color: var(--accent); margin-top: 1rem">Open Account →</a>
+      <a href="./login.html" style="color: var(--accent)">Login →</a>
+    </div>
+
+    <nav>
+      <a href="#" class="nav-logo">
+        <div class="logo-mark">W</div>
+        <span class="logo-text">Wealth <em>Access</em></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="./login.html" class="btn-secondary">Login</a>
+        <a href="./register.html" class="btn-primary">Open Account</a>
+      </div>
+      <button class="hamburger" onclick="openMobileMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <section class="hero" id="home">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          Trusted by 100,000+ users worldwide
+        </div>
+        <h1>Seamless Financial <em>Control</em> at Your Fingertips.</h1>
+        <p class="hero-sub">
+          Wealth Access empowers you with instant transfers, multi-currency support, secure digital wallets, and real-time insights — all designed for modern financial freedom.
+        </p>
+        <div class="hero-btns">
+          <a href="./register.html" class="btn-hero-primary">
+            Get Started
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#how" class="btn-hero-secondary">Learn More</a>
+        </div>
+        <div class="hero-proof">
+          <div class="proof-avatars">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="" />
+            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=80&h=80&fit=crop&crop=face" alt="" />
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face" alt="" />
+          </div>
+          <div class="proof-text">
+            <strong>4.8 / 5</strong> from 8,500+ verified reviews
+          </div>
+        </div>
+      </div>
+      <div class="hero-right">
+        <img src="/assets/images/hero.avif" alt="Wealth Access" style="max-height: 100vh;" />
+      </div>
+    </section>
+
+    <div class="marquee-strip">
+      <div class="marquee-track">
+        <div class="marquee-item"><span class="marquee-dot"></span><span>Instant Settlements</span></div>
+        <div class="marquee-item"><span class="marquee-dot"></span><span>Global Transfers</span></div>
+        <div class="marquee-item"><span class="marquee-dot"></span><span>Digital Wallet</span></div>
+        <div class="marquee-item"><span class="marquee-dot"></span><span>Multi-Currency</span></div>
+        <div class="marquee-item"><span class="marquee-dot"></span><span>256-bit SSL</span></div>
+        <div class="marquee-item"><span class="marquee-dot"></span><span>140+ Countries</span></div>
+        <div class="marquee-item"><span class="marquee-dot"></span><span>24/7 Support</span></div>
+        <div class="marquee-item"><span class="marquee-dot"></span><span>Zero Commission</span></div>
+        <div class="marquee-item"><span class="marquee-dot"></span><span>Instant Settlements</span></div>
+        <div class="marquee-item"><span class="marquee-dot"></span><span>Global Transfers</span></div>
+      </div>
+    </div>
+
+    <section class="stats-section">
+      <div class="stats-inner">
+        <div class="stats-grid">
+          <div class="stat-item reveal">
+            <div class="stat-num">100K+</div>
+            <div class="stat-label">Active Users</div>
+          </div>
+          <div class="stat-item reveal">
+            <div class="stat-num">$5B+</div>
+            <div class="stat-label">Total Volume</div>
+          </div>
+          <div class="stat-item reveal">
+            <div class="stat-num">99.95%</div>
+            <div class="stat-label">Uptime</div>
+          </div>
+          <div class="stat-item reveal">
+            <div class="stat-num">140+</div>
+            <div class="stat-label">Countries Served</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features-section" id="features">
+      <div class="features-inner">
+        <div class="features-header">
+          <div class="section-tag reveal">Powerful Features</div>
+          <h2 class="section-h2 reveal">Everything you need<br/>to manage money <em>effortlessly</em></h2>
+          <p class="section-desc reveal">Purpose-built for flexibility, speed, and security—designed for professionals who demand the best.</p>
+        </div>
+        <div class="features-grid">
+          <div class="feat-card reveal">
+            <div class="feat-num">01</div>
+            <div class="feat-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <div class="feat-title">Instant Transfers</div>
+            <div class="feat-desc">Send money instantly within hours to any account, globally or domestically.</div>
+          </div>
+          <div class="feat-card reveal">
+            <div class="feat-num">02</div>
+            <div class="feat-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div class="feat-title">Multi-Currency</div>
+            <div class="feat-desc">Hold and exchange 50+ currencies with live market rates.</div>
+          </div>
+          <div class="feat-card reveal">
+            <div class="feat-num">03</div>
+            <div class="feat-icon">
+              <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+            </div>
+            <div class="feat-title">Digital Wallet</div>
+            <div class="feat-desc">Secure digital wallet for receiving, storing, and managing funds.</div>
+          </div>
+          <div class="feat-card reveal">
+            <div class="feat-num">04</div>
+            <div class="feat-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+            </div>
+            <div class="feat-title">Smart Analytics</div>
+            <div class="feat-desc">Detailed spending insights and transaction analytics.</div>
+          </div>
+          <div class="feat-card reveal">
+            <div class="feat-num">05</div>
+            <div class="feat-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="feat-title">Enterprise Security</div>
+            <div class="feat-desc">256-bit encryption, biometric auth, and advanced fraud detection.</div>
+          </div>
+          <div class="feat-card reveal">
+            <div class="feat-num">06</div>
+            <div class="feat-icon">
+              <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            </div>
+            <div class="feat-title">Real-Time Updates</div>
+            <div class="feat-desc">Live notifications for every transaction and account activity.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="how-section" id="how">
+      <div class="how-inner">
+        <div class="section-tag reveal">Getting Started</div>
+        <h2 class="section-h2 reveal">Ready in <em>5 minutes</em></h2>
+        <div class="how-grid">
+          <img src="assets/images/money.jfif" alt="Setup" class="how-img reveal" />
+          <div class="steps">
+            <div class="step-item reveal">
+              <div class="step-num">1</div>
+              <div class="step-content">
+                <h3>Sign Up</h3>
+                <p>Create account with email or phone. Takes under 2 minutes.</p>
+              </div>
+            </div>
+            <div class="step-item reveal">
+              <div class="step-num">2</div>
+              <div class="step-content">
+                <h3>Verify Identity</h3>
+                <p>One-time verification via SMS or email. Instant activation.</p>
+              </div>
+            </div>
+            <div class="step-item reveal">
+              <div class="step-num">3</div>
+              <div class="step-content">
+                <h3>Fund Account</h3>
+                <p>Deposit via transfer or multiple payment methods.</p>
+              </div>
+            </div>
+            <div class="step-item reveal">
+              <div class="step-num">4</div>
+              <div class="step-content">
+                <h3>Start Moving Money</h3>
+                <p>Begin transferring instantly to anywhere in the world.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="testi-section" id="testimonials">
+      <div class="testi-inner">
+        <div style="text-align: center; margin-bottom: 3rem;">
+          <div class="section-tag reveal" style="justify-content: center;">User Stories</div>
+          <h2 class="section-h2 reveal">What users love about us</h2>
+        </div>
+        <div class="testi-grid">
+          <div class="testi-card reveal">
+            <div class="testi-stars">★★★★★</div>
+            <p class="testi-text">
+              "Finally a platform that respects my time. Transfers that actually arrive instantly. Support that answers back. This is how it should be."
+            </p>
+            <div class="testi-author">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="" class="author-img" />
+              <div>
+                <div class="author-name">Marcus Johnson</div>
+                <div class="author-role">Entrepreneur</div>
+              </div>
+            </div>
+          </div>
+          <div class="testi-card reveal">
+            <div class="testi-stars">★★★★★</div>
+            <p class="testi-text">
+              "The multi-currency feature is a game-changer for my international clients. Exchange rates are transparent and unbeatable."
+            </p>
+            <div class="testi-author">
+              <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=80&h=80&fit=crop&crop=face" alt="" class="author-img" />
+              <div>
+                <div class="author-name">Sarah Chen</div>
+                <div class="author-role">Freelancer</div>
+              </div>
+            </div>
+          </div>
+          <div class="testi-card reveal">
+            <div class="testi-stars">★★★★★</div>
+            <p class="testi-text">
+              "Zero hidden fees. Zero nonsense. Just pure financial control. This is what modern money should feel like."
+            </p>
+            <div class="testi-author">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face" alt="" class="author-img" />
+              <div>
+                <div class="author-name">David Rivera</div>
+                <div class="author-role">Small Business Owner</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="cta-content">
+        <h2 class="cta-title">Ready to take control of your <em>finances?</em></h2>
+        <p class="cta-sub">Join thousands of users who have moved beyond traditional financial limitations. Start free today.</p>
+        <div class="cta-btns">
+          <a href="./register.html" class="btn-cta-light">Get Started Free</a>
+          <a href="./contact.html" class="btn-cta-border">Learn More</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">Wealth <em>Access</em></div>
+          <p class="footer-tagline">Modern financial control. No limits. No compromises.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how">How It Works</a></li>
+            <li><a href="./register.html">Sign Up</a></li>
+            <li><a href="./login.html">Login</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="./contact.html">Contact</a></li>
+            <li><a href="/terms-of-service.html">Terms</a></li>
+            <li><a href="/terms-of-service.html">Privacy</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/terms-of-service.html">Terms of Service</a></li>
+            <li><a href="/terms-of-service.html">Privacy Policy</a></li>
+            <li><a href="#">Compliance</a></li>
+            <li><a href="#">Security</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2025 Wealth Access. All rights reserved.</div>
+        <div class="footer-legal">
+          <a href="/terms-of-service.html">Privacy</a>
+          <a href="/terms-of-service.html">Terms</a>
+          <a href="./contact.html">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      function openMobileMenu() {
+        document.getElementById("mobileMenu").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeMobileMenu() {
+        document.getElementById("mobileMenu").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+    </script>
+  </body>
+</html>

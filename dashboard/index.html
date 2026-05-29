@@ -707,44 +707,55 @@ x-init="
   </div>
 
   <!-- ============== STAT CARDS (4) — responsive grid ============== -->
-  <div class="px-4 sm:px-6 mb-5 sm:mb-6">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+  <!-- ============== STAT CARDS — Total Balance left + 2x2 grid right ============== -->
+<div class="px-4 sm:px-6 mb-5 sm:mb-6">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
 
-      <!-- Total Balance -->
-      <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700">
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Total Balance</span>
-          <span class="text-xs text-gray-400 dark:text-gray-500 flex items-center">
-            <i class="fa-solid fa-flag text-xs mr-1"></i> USD
-          </span>
-        </div>
-        <h3 class="dd-total-balance text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight">$0.00</h3>
-        <p class="text-xs text-green-600 dark:text-green-400 font-medium">
-          <i class="fa-solid fa-arrow-up text-[10px]"></i>
-          <span class="dd-balance-change">5%</span> than last month
-        </p>
-        <div class="flex gap-2 mt-3">
-          <a href="/dashboard/localtransfer.html"
-                  class="flex-1 bg-gray-900 dark:bg-primary-500 hover:bg-gray-800 dark:hover:bg-primary-600 text-white text-xs font-medium px-3 py-2 rounded-lg flex items-center justify-center gap-1.5 transition-colors">
-            <i class="fa-solid fa-paper-plane text-xs"></i> Transfer
-        </a>
-          <!-- <button onclick="document.querySelector('[x-data]').__x.$data.showAddMoney = true"
-                  class="flex-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white text-xs font-medium px-3 py-2 rounded-lg flex items-center justify-center gap-1.5 transition-colors">
-            <i class="fa-solid fa-arrow-down text-xs"></i> Request
-          </button> -->
-        </div>
-      </div>
+    <!-- Total Balance (tall card, spans 1 col on desktop) -->
+    <!-- Total Balance (tall card, spans 1 col on desktop) -->
+<div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700 flex flex-col justify-between">
+  <div>
+    <div class="flex items-center justify-between mb-3">
+      <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Total Balance</span>
+      <span class="text-xs text-gray-400 dark:text-gray-500 flex items-center">
+        <i class="fa-solid fa-flag text-xs mr-1"></i> USD
+      </span>
+    </div>
+    <h3 class="dd-total-balance text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight">$0.00</h3>
+    <p class="text-xs text-green-600 dark:text-green-400 font-medium mb-4">
+      <i class="fa-solid fa-arrow-up text-[10px]"></i>
+      <span class="dd-balance-change">5%</span> than last month
+    </p>
 
-      <!-- Total Earnings (HIGHLIGHTED — primary blue) -->
+    <!-- Transfer + Request buttons -->
+    <div class="flex gap-2 mb-4">
+      <a href="/dashboard/localtransfer.html"
+         class="flex-1 bg-gray-900 dark:bg-primary-500 hover:bg-gray-800 dark:hover:bg-primary-600 text-white text-xs font-medium px-3 py-2.5 rounded-lg flex items-center justify-center gap-1.5 transition-colors">
+        <i class="fa-solid fa-paper-plane text-xs"></i> Transfer
+      </a>
+      <!-- <button class="flex-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white text-xs font-medium px-3 py-2.5 rounded-lg flex items-center justify-center gap-1.5 transition-colors">
+        <i class="fa-solid fa-arrow-down text-xs"></i> Request
+      </button> -->
+    </div>
+
+    <!-- Wallets row -->
+    
+  </div>
+</div>
+
+    <!-- 2x2 Grid of 4 stat cards -->
+    <div class="lg:col-span-2 grid grid-cols-2 gap-3 sm:gap-4">
+
+      <!-- Total Earnings (highlighted orange/primary) -->
       <div class="bg-primary-500 dark:bg-primary-600 rounded-2xl p-4 sm:p-5 text-white relative overflow-hidden">
         <div class="absolute -top-4 -right-4 w-24 h-24 bg-white/10 rounded-full"></div>
         <div class="absolute -bottom-6 -left-6 w-20 h-20 bg-white/5 rounded-full"></div>
         <div class="relative">
-          <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-medium text-white/80">Total Earnings</span>
             <i class="fa-solid fa-ellipsis text-white/70 text-xs"></i>
           </div>
-          <h3 class="dd-total-earnings text-xl sm:text-2xl font-bold mb-2 tracking-tight">$0.00</h3>
+          <h3 class="dd-total-earnings text-xl sm:text-2xl font-bold mb-1 tracking-tight">$0.00</h3>
           <p class="text-xs text-white/90 font-medium">
             <i class="fa-solid fa-arrow-down text-[10px]"></i>
             <span class="dd-earnings-change">7%</span> This month
@@ -754,31 +765,46 @@ x-init="
 
       <!-- Total Spending -->
       <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700">
-        <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center justify-between mb-2">
           <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Total Spending</span>
           <i class="fa-solid fa-ellipsis text-gray-400 text-xs"></i>
         </div>
-        <h3 class="dd-total-spending text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight">$0.00</h3>
+        <h3 class="dd-total-spending text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-1 tracking-tight">$0.00</h3>
         <p class="text-xs text-red-500 dark:text-red-400 font-medium">
           <i class="fa-solid fa-arrow-down text-[10px]"></i>
           <span class="dd-spending-change">5%</span> This month
         </p>
       </div>
 
-      <!-- Total Volume -->
+      <!-- Total Income -->
       <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700">
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Total Volume</span>
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Total Income</span>
           <i class="fa-solid fa-ellipsis text-gray-400 text-xs"></i>
         </div>
-        <h3 class="dd-total-volume text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight">$0.00</h3>
+        <h3 class="dd-total-income text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-1 tracking-tight">$0.00</h3>
         <p class="text-xs text-green-600 dark:text-green-400 font-medium">
           <i class="fa-solid fa-arrow-up text-[10px]"></i>
-          <span class="dd-volume-change">4%</span> This month
+          <span class="dd-income-change">8%</span> This month
         </p>
       </div>
+
+      <!-- Total Revenue -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Total Revenue</span>
+          <i class="fa-solid fa-ellipsis text-gray-400 text-xs"></i>
+        </div>
+        <h3 class="dd-total-revenue text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-1 tracking-tight">$0.00</h3>
+        <p class="text-xs text-green-600 dark:text-green-400 font-medium">
+          <i class="fa-solid fa-arrow-up text-[10px]"></i>
+          <span class="dd-revenue-change">4%</span> This month
+        </p>
+      </div>
+
     </div>
   </div>
+</div>
 
   <!-- ============== MAIN GRID (responsive: 1 col mobile → 3 col desktop) ============== -->
   <div class="px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-5 sm:mb-6">

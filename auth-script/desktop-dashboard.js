@@ -16,37 +16,37 @@
   // ---------- CURRENCY MAPPING (Country/Code → Symbol) ----------
   const CURRENCY_MAP = {
     // Africa
-    "NG": { symbol: "₦", code: "NGN", country: "Nigeria" },
-    "KE": { symbol: "KSh", code: "KES", country: "Kenya" },
-    "ZA": { symbol: "R", code: "ZAR", country: "South Africa" },
-    "EG": { symbol: "E£", code: "EGP", country: "Egypt" },
-    "GH": { symbol: "₵", code: "GHS", country: "Ghana" },
-    
+    NG: { symbol: "₦", code: "NGN", country: "Nigeria" },
+    KE: { symbol: "KSh", code: "KES", country: "Kenya" },
+    ZA: { symbol: "R", code: "ZAR", country: "South Africa" },
+    EG: { symbol: "E£", code: "EGP", country: "Egypt" },
+    GH: { symbol: "₵", code: "GHS", country: "Ghana" },
+
     // Americas
-    "US": { symbol: "$", code: "USD", country: "United States" },
-    "CA": { symbol: "C$", code: "CAD", country: "Canada" },
-    "MX": { symbol: "$", code: "MXN", country: "Mexico" },
-    "BR": { symbol: "R$", code: "BRL", country: "Brazil" },
-    
+    US: { symbol: "$", code: "USD", country: "United States" },
+    CA: { symbol: "C$", code: "CAD", country: "Canada" },
+    MX: { symbol: "$", code: "MXN", country: "Mexico" },
+    BR: { symbol: "R$", code: "BRL", country: "Brazil" },
+
     // Europe
-    "GB": { symbol: "£", code: "GBP", country: "United Kingdom" },
-    "DE": { symbol: "€", code: "EUR", country: "Germany" },
-    "FR": { symbol: "€", code: "EUR", country: "France" },
-    "IT": { symbol: "€", code: "EUR", country: "Italy" },
-    "ES": { symbol: "€", code: "EUR", country: "Spain" },
-    "NL": { symbol: "€", code: "EUR", country: "Netherlands" },
-    
+    GB: { symbol: "£", code: "GBP", country: "United Kingdom" },
+    DE: { symbol: "€", code: "EUR", country: "Germany" },
+    FR: { symbol: "€", code: "EUR", country: "France" },
+    IT: { symbol: "€", code: "EUR", country: "Italy" },
+    ES: { symbol: "€", code: "EUR", country: "Spain" },
+    NL: { symbol: "€", code: "EUR", country: "Netherlands" },
+
     // Asia
-    "IN": { symbol: "₹", code: "INR", country: "India" },
-    "JP": { symbol: "¥", code: "JPY", country: "Japan" },
-    "SG": { symbol: "S$", code: "SGD", country: "Singapore" },
-    "CN": { symbol: "¥", code: "CNY", country: "China" },
+    IN: { symbol: "₹", code: "INR", country: "India" },
+    JP: { symbol: "¥", code: "JPY", country: "Japan" },
+    SG: { symbol: "S$", code: "SGD", country: "Singapore" },
+    CN: { symbol: "¥", code: "CNY", country: "China" },
   };
 
   // ---------- Get Currency from User Profile or Country ----------
   function getCurrencyInfo() {
     const profile = window._userProfile;
-    
+
     // First, try to get from profile's currency field
     if (profile?.currency?.symbol && profile?.currency?.code) {
       return {
@@ -126,58 +126,165 @@
   const isDark = () => document.documentElement.classList.contains("dark");
 
   const statusStyles = {
-    completed: "text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-900/30",
-    pending:   "text-yellow-700 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/30",
-    processing:"text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30",
-    failed:    "text-red-700 dark:text-red-400 bg-red-50 dark:bg-red-900/30",
+    completed:
+      "text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-900/30",
+    pending:
+      "text-yellow-700 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/30",
+    processing:
+      "text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30",
+    failed: "text-red-700 dark:text-red-400 bg-red-50 dark:bg-red-900/30",
     cancelled: "text-gray-700 dark:text-gray-400 bg-gray-100 dark:bg-gray-700",
   };
 
   const statusDot = {
     completed: "bg-green-500",
-    pending:   "bg-yellow-500",
-    processing:"bg-blue-500",
-    failed:    "bg-red-500",
+    pending: "bg-yellow-500",
+    processing: "bg-blue-500",
+    failed: "bg-red-500",
     cancelled: "bg-gray-500",
   };
 
   const activityIcon = (act) => {
     const m = (act.method || act.activity || "").toLowerCase();
-    if (m.includes("wire"))   return { icon: "fa-globe", color: "text-blue-600 bg-blue-50 dark:bg-blue-900/30" };
-    if (m.includes("crypto") || m.includes("btc")) return { icon: "fa-bitcoin", color: "text-orange-600 bg-orange-50 dark:bg-orange-900/30", brand: true };
-    if (m.includes("paypal")) return { icon: "fa-paypal", color: "text-indigo-600 bg-indigo-50 dark:bg-indigo-900/30", brand: true };
-    if (m.includes("zelle"))  return { icon: "fa-z", color: "text-purple-600 bg-purple-50 dark:bg-purple-900/30" };
-    if (m.includes("wise"))   return { icon: "fa-arrow-right-arrow-left", color: "text-green-600 bg-green-50 dark:bg-green-900/30" };
-    if (m.includes("local") || act.type === "local") return { icon: "fa-building-columns", color: "text-primary-600 bg-primary-50 dark:bg-primary-900/30" };
-    return { icon: "fa-arrow-right-arrow-left", color: "text-gray-600 bg-gray-100 dark:bg-gray-700" };
+    if (m.includes("wire"))
+      return {
+        icon: "fa-globe",
+        color: "text-blue-600 bg-blue-50 dark:bg-blue-900/30",
+      };
+    if (m.includes("crypto") || m.includes("btc"))
+      return {
+        icon: "fa-bitcoin",
+        color: "text-orange-600 bg-orange-50 dark:bg-orange-900/30",
+        brand: true,
+      };
+    if (m.includes("paypal"))
+      return {
+        icon: "fa-paypal",
+        color: "text-indigo-600 bg-indigo-50 dark:bg-indigo-900/30",
+        brand: true,
+      };
+    if (m.includes("zelle"))
+      return {
+        icon: "fa-z",
+        color: "text-purple-600 bg-purple-50 dark:bg-purple-900/30",
+      };
+    if (m.includes("wise"))
+      return {
+        icon: "fa-arrow-right-arrow-left",
+        color: "text-green-600 bg-green-50 dark:bg-green-900/30",
+      };
+    if (m.includes("local") || act.type === "local")
+      return {
+        icon: "fa-building-columns",
+        color: "text-primary-600 bg-primary-50 dark:bg-primary-900/30",
+      };
+    return {
+      icon: "fa-arrow-right-arrow-left",
+      color: "text-gray-600 bg-gray-100 dark:bg-gray-700",
+    };
   };
 
   // ---------- Card color schemes (matches user-cards.js exactly) ----------
   const CARD_SCHEMES = {
-    blue:    { gradient: "linear-gradient(135deg, #1a56db 0%, #1e40af 50%, #1e3a8a 100%)", shine: "rgba(255,255,255,0.12)", accent: "#93c5fd" },
-    purple:  { gradient: "linear-gradient(135deg, #7c3aed 0%, #6d28d9 50%, #4c1d95 100%)", shine: "rgba(255,255,255,0.10)", accent: "#c4b5fd" },
-    violet:  { gradient: "linear-gradient(135deg, #8b5cf6 0%, #7c3aed 40%, #4338ca 100%)", shine: "rgba(255,255,255,0.12)", accent: "#ddd6fe" },
-    rose:    { gradient: "linear-gradient(135deg, #e11d48 0%, #be123c 50%, #881337 100%)", shine: "rgba(255,255,255,0.10)", accent: "#fda4af" },
-    gold:    { gradient: "linear-gradient(135deg, #b45309 0%, #92400e 50%, #78350f 100%)", shine: "rgba(255,215,0,0.15)",   accent: "#fcd34d" },
-    emerald: { gradient: "linear-gradient(135deg, #059669 0%, #047857 50%, #064e3b 100%)", shine: "rgba(255,255,255,0.10)", accent: "#6ee7b7" },
-    slate:   { gradient: "linear-gradient(135deg, #334155 0%, #1e293b 50%, #0f172a 100%)", shine: "rgba(255,255,255,0.08)", accent: "#94a3b8" },
-    cyan:    { gradient: "linear-gradient(135deg, #0891b2 0%, #0e7490 50%, #164e63 100%)", shine: "rgba(255,255,255,0.12)", accent: "#67e8f9" },
-    pink:    { gradient: "linear-gradient(135deg, #db2777 0%, #be185d 50%, #831843 100%)", shine: "rgba(255,255,255,0.10)", accent: "#f9a8d4" },
-    black:   { gradient: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0d0d0d 100%)", shine: "rgba(255,255,255,0.06)", accent: "#e2e8f0" },
-    default: { gradient: "linear-gradient(135deg, #1a56db 0%, #1e40af 50%, #1e3a8a 100%)", shine: "rgba(255,255,255,0.12)", accent: "#93c5fd" },
+    blue: {
+      gradient:
+        "linear-gradient(135deg, #1a56db 0%, #1e40af 50%, #1e3a8a 100%)",
+      shine: "rgba(255,255,255,0.12)",
+      accent: "#93c5fd",
+    },
+    purple: {
+      gradient:
+        "linear-gradient(135deg, #7c3aed 0%, #6d28d9 50%, #4c1d95 100%)",
+      shine: "rgba(255,255,255,0.10)",
+      accent: "#c4b5fd",
+    },
+    violet: {
+      gradient:
+        "linear-gradient(135deg, #8b5cf6 0%, #7c3aed 40%, #4338ca 100%)",
+      shine: "rgba(255,255,255,0.12)",
+      accent: "#ddd6fe",
+    },
+    rose: {
+      gradient:
+        "linear-gradient(135deg, #e11d48 0%, #be123c 50%, #881337 100%)",
+      shine: "rgba(255,255,255,0.10)",
+      accent: "#fda4af",
+    },
+    gold: {
+      gradient:
+        "linear-gradient(135deg, #b45309 0%, #92400e 50%, #78350f 100%)",
+      shine: "rgba(255,215,0,0.15)",
+      accent: "#fcd34d",
+    },
+    emerald: {
+      gradient:
+        "linear-gradient(135deg, #059669 0%, #047857 50%, #064e3b 100%)",
+      shine: "rgba(255,255,255,0.10)",
+      accent: "#6ee7b7",
+    },
+    slate: {
+      gradient:
+        "linear-gradient(135deg, #334155 0%, #1e293b 50%, #0f172a 100%)",
+      shine: "rgba(255,255,255,0.08)",
+      accent: "#94a3b8",
+    },
+    cyan: {
+      gradient:
+        "linear-gradient(135deg, #0891b2 0%, #0e7490 50%, #164e63 100%)",
+      shine: "rgba(255,255,255,0.12)",
+      accent: "#67e8f9",
+    },
+    pink: {
+      gradient:
+        "linear-gradient(135deg, #db2777 0%, #be185d 50%, #831843 100%)",
+      shine: "rgba(255,255,255,0.10)",
+      accent: "#f9a8d4",
+    },
+    black: {
+      gradient:
+        "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0d0d0d 100%)",
+      shine: "rgba(255,255,255,0.06)",
+      accent: "#e2e8f0",
+    },
+    default: {
+      gradient:
+        "linear-gradient(135deg, #1a56db 0%, #1e40af 50%, #1e3a8a 100%)",
+      shine: "rgba(255,255,255,0.12)",
+      accent: "#93c5fd",
+    },
   };
 
   const BRAND_ICONS = {
     mastercard: "fa-brands fa-cc-mastercard",
-    visa:       "fa-brands fa-cc-visa",
-    amex:       "fa-brands fa-cc-amex",
+    visa: "fa-brands fa-cc-visa",
+    amex: "fa-brands fa-cc-amex",
   };
 
   const STATUS_BADGE = {
-    active:   { bg: "rgba(52,211,153,0.2)",  border: "rgba(52,211,153,0.4)",  dot: "#34d399", label: "Active" },
-    pending:  { bg: "rgba(251,191,36,0.2)",  border: "rgba(251,191,36,0.4)",  dot: "#fbbf24", label: "Pending" },
-    blocked:  { bg: "rgba(239,68,68,0.2)",   border: "rgba(239,68,68,0.4)",   dot: "#ef4444", label: "Blocked" },
-    inactive: { bg: "rgba(148,163,184,0.2)", border: "rgba(148,163,184,0.4)", dot: "#94a3b8", label: "Inactive" },
+    active: {
+      bg: "rgba(52,211,153,0.2)",
+      border: "rgba(52,211,153,0.4)",
+      dot: "#34d399",
+      label: "Active",
+    },
+    pending: {
+      bg: "rgba(251,191,36,0.2)",
+      border: "rgba(251,191,36,0.4)",
+      dot: "#fbbf24",
+      label: "Pending",
+    },
+    blocked: {
+      bg: "rgba(239,68,68,0.2)",
+      border: "rgba(239,68,68,0.4)",
+      dot: "#ef4444",
+      label: "Blocked",
+    },
+    inactive: {
+      bg: "rgba(148,163,184,0.2)",
+      border: "rgba(148,163,184,0.4)",
+      dot: "#94a3b8",
+      label: "Inactive",
+    },
   };
 
   // ---------- State ----------
@@ -190,6 +297,10 @@
     if (greetEl) greetEl.textContent = greetingFor();
     setTextAll(".dd-firstname", (data.user?.fullname || "there").split(" ")[0]);
 
+    setTextAll(".dd-total-income", fmtFiat(data.stats?.totalIncome));
+    setTextAll(".dd-total-revenue", fmtFiat(data.stats?.totalRevenue));
+    setTextAll(".dd-income-change", `${data.changes?.income ?? 8}%`);
+    setTextAll(".dd-revenue-change", `${data.changes?.revenue ?? 4}%`);
     setTextAll(".dd-total-balance", fmtFiat(data.balances?.fiat));
     setTextAll(".dd-total-earnings", fmtFiat(data.stats?.monthlyDeposits));
     setTextAll(".dd-total-spending", fmtFiat(data.stats?.monthlyExpenses));
@@ -205,7 +316,10 @@
 
     setTextAll(".dd-tx-limit", fmtFiat(data.stats?.transactionLimit, 0));
     setTextAll(".dd-pending-total", fmtFiat(data.stats?.pendingTotal));
-    setTextAll(".dd-pending-count", `${data.stats?.pendingCount || 0} transactions`);
+    setTextAll(
+      ".dd-pending-count",
+      `${data.stats?.pendingCount || 0} transactions`,
+    );
 
     const spent = Number(data.spendingLimit?.spent || 0);
     const limit = Number(data.spendingLimit?.limit || 0);
@@ -217,57 +331,101 @@
   }
 
   // ---------- Render: chart ----------
-  function renderChart(profitLoss) {
-    const canvas = $("#dd-profit-loss-chart");
-    if (!canvas || typeof Chart === "undefined") return;
+function renderChart(profitLoss) {
+  const canvas = $("#dd-profit-loss-chart");
+  if (!canvas || typeof Chart === "undefined") return;
 
-    const labels = profitLoss.map((p) => p.month);
-    const profitData = profitLoss.map((p) => p.profit);
-    const lossData = profitLoss.map((p) => p.loss);
+  const labels = profitLoss.map((p) => p.month);
+  const profitData = profitLoss.map((p) => p.profit);
+  const lossData = profitLoss.map((p) => p.loss);
 
-    const dark = isDark();
-    const gridColor = dark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)";
-    const tickColor = dark ? "#9ca3af" : "#6b7280";
+  const dark = isDark();
+  const gridColor = dark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.04)";
+  const tickColor = dark ? "#6b7280" : "#9ca3af";
 
-    if (chartInstance) chartInstance.destroy();
+  if (chartInstance) chartInstance.destroy();
 
-    chartInstance = new Chart(canvas.getContext("2d"), {
-      type: "bar",
-      data: {
-        labels,
-        datasets: [
-          { label: "Profit", data: profitData, backgroundColor: "#0ea5e9", borderRadius: 6, barThickness: 12 },
-          { label: "Loss",   data: lossData,   backgroundColor: dark ? "#d1d5db" : "#111827", borderRadius: 6, barThickness: 12 },
-        ],
+  chartInstance = new Chart(canvas.getContext("2d"), {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [
+        {
+          label: "Profit",
+          data: profitData,
+          backgroundColor: "#f97316",   // orange — swap for your primary-500 hex
+          hoverBackgroundColor: "#ea6c0a",
+          borderRadius: { topLeft: 6, topRight: 6, bottomLeft: 0, bottomRight: 0 },
+          borderSkipped: false,
+          barThickness: 16,
+          categoryPercentage: 0.7,
+          barPercentage: 0.85,
+        },
+        {
+          label: "Loss",
+          data: lossData,
+          backgroundColor: dark ? "#374151" : "#111827",
+          hoverBackgroundColor: dark ? "#4b5563" : "#1f2937",
+          borderRadius: { topLeft: 6, topRight: 6, bottomLeft: 0, bottomRight: 0 },
+          borderSkipped: false,
+          barThickness: 16,
+          categoryPercentage: 0.7,
+          barPercentage: 0.85,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: {
+        mode: "index",
+        intersect: false,
       },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            backgroundColor: dark ? "#1f2937" : "#111827",
-            titleColor: "#fff",
-            bodyColor: "#fff",
-            padding: 10,
-            cornerRadius: 8,
-            displayColors: true,
-            callbacks: {
-              label: (ctx) => ` ${ctx.dataset.label}: ${fmtFiat(ctx.parsed.y, 0)}`,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: dark ? "#1f2937" : "#111827",
+          titleColor: "#fff",
+          bodyColor: "#d1d5db",
+          padding: 12,
+          cornerRadius: 10,
+          displayColors: true,
+          callbacks: {
+            label: (ctx) => ` ${ctx.dataset.label}: ${fmtFiat(ctx.parsed.y, 0)}`,
+          },
+        },
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          border: { display: false },
+          ticks: {
+            color: tickColor,
+            font: { size: 11 },
+          },
+        },
+        y: {
+          grid: {
+            color: gridColor,
+            drawBorder: false,
+          },
+          border: { display: false, dash: [4, 4] },
+          ticks: {
+            color: tickColor,
+            font: { size: 11 },
+            maxTicksLimit: 5,
+            callback: (v) => {
+              if (v >= 1000000) return `${v / 1000000}M`;
+              if (v >= 1000) return `${v / 1000}k`;
+              return v;
             },
           },
-        },
-        scales: {
-          x: { grid: { display: false }, ticks: { color: tickColor, font: { size: 11 } } },
-          y: {
-            grid: { color: gridColor, drawBorder: false },
-            ticks: { color: tickColor, font: { size: 11 }, callback: (v) => (v >= 1000 ? `${v / 1000}k` : v) },
-            beginAtZero: true,
-          },
+          beginAtZero: true,
         },
       },
-    });
-  }
+    },
+  });
+}
 
   // ---------- Render: activities ----------
   function renderActivities(activities) {
@@ -285,16 +443,20 @@
       return;
     }
 
-    tbody.innerHTML = activities.slice(0, 10)
+    tbody.innerHTML = activities
+      .slice(0, 10)
       .map((a) => {
         const icon = activityIcon(a);
         const status = (a.status || "pending").toLowerCase();
         const pill = statusStyles[status] || statusStyles.pending;
         const dot = statusDot[status] || statusDot.pending;
-        const iconClass = icon.brand ? `fa-brands ${icon.icon}` : `fa-solid ${icon.icon}`;
-        const amountColor = a.type === "credit"
-          ? "text-green-600 dark:text-green-400"
-          : "text-gray-900 dark:text-white";
+        const iconClass = icon.brand
+          ? `fa-brands ${icon.icon}`
+          : `fa-solid ${icon.icon}`;
+        const amountColor =
+          a.type === "credit"
+            ? "text-green-600 dark:text-green-400"
+            : "text-gray-900 dark:text-white";
         const amountPrefix = a.type === "credit" ? "+" : "";
 
         return `
@@ -466,18 +628,25 @@
       return;
     }
 
-    const cardsHtml = cards.map((c) => {
-      const scheme = CARD_SCHEMES[c.color_scheme] || CARD_SCHEMES.default;
-      const status = STATUS_BADGE[c.status] || STATUS_BADGE.inactive;
-      const brandClass = BRAND_ICONS[(c.card_brand || "visa").toLowerCase()] || BRAND_ICONS.visa;
-      const typeLabel = c.card_type === "physical" ? "Physical Card" : "Virtual Card";
-      const masked = c.last_four ? `•••• •••• •••• ${c.last_four}` : "•••• •••• •••• ••••";
-      const expiry = c.expiry_formatted ||
-        (c.expiry_month && c.expiry_year
-          ? `${c.expiry_month}/${String(c.expiry_year).slice(-2)}`
-          : "••/••");
+    const cardsHtml = cards
+      .map((c) => {
+        const scheme = CARD_SCHEMES[c.color_scheme] || CARD_SCHEMES.default;
+        const status = STATUS_BADGE[c.status] || STATUS_BADGE.inactive;
+        const brandClass =
+          BRAND_ICONS[(c.card_brand || "visa").toLowerCase()] ||
+          BRAND_ICONS.visa;
+        const typeLabel =
+          c.card_type === "physical" ? "Physical Card" : "Virtual Card";
+        const masked = c.last_four
+          ? `•••• •••• •••• ${c.last_four}`
+          : "•••• •••• •••• ••••";
+        const expiry =
+          c.expiry_formatted ||
+          (c.expiry_month && c.expiry_year
+            ? `${c.expiry_month}/${String(c.expiry_year).slice(-2)}`
+            : "••/••");
 
-      return `
+        return `
         <div class="dd-card" style="background: ${scheme.gradient};">
           <div class="dd-card-shine" style="background: linear-gradient(135deg, transparent 30%, ${scheme.shine} 50%, transparent 70%);"></div>
           <div class="dd-card-circle dd-card-c1" style="background: ${scheme.shine};"></div>
@@ -512,7 +681,8 @@
             <i class="${brandClass}" style="color: rgba(255,255,255,0.5); font-size: 26px;"></i>
           </div>
         </div>`;
-    }).join("");
+      })
+      .join("");
 
     mount.innerHTML = `<div class="dd-cards-row">${cardsHtml}</div>`;
   }
@@ -559,7 +729,9 @@
   // ---------- Fetch overview ----------
   async function loadOverview() {
     try {
-      const res = await fetch("/api/dashboard/overview", { credentials: "include" });
+      const res = await fetch("/api/dashboard/overview", {
+        credentials: "include",
+      });
       if (!res.ok) throw new Error(`Overview fetch failed: ${res.status}`);
       const data = await res.json();
       cachedData = data;
@@ -599,7 +771,10 @@
       if (!res.ok) throw new Error(`Cards fetch failed: ${res.status}`);
       const data = await res.json();
       const cards = data.cards || [];
-      console.log("[desktop-dashboard] cards:", cards.map(c => ({ id: c._id || c.id, color_scheme: c.color_scheme })));
+      console.log(
+        "[desktop-dashboard] cards:",
+        cards.map((c) => ({ id: c._id || c.id, color_scheme: c.color_scheme })),
+      );
       renderCards(cards);
     } catch (err) {
       console.error("[desktop-dashboard] cards:", err);
@@ -613,7 +788,10 @@
 
   // ---------- Init ----------
   function init() {
-    console.log("[desktop-dashboard] Initializing with currency:", getCurrencyInfo());
+    console.log(
+      "[desktop-dashboard] Initializing with currency:",
+      getCurrencyInfo(),
+    );
     loadOverview();
     loadCards();
     attachSearch();
@@ -624,12 +802,20 @@
   // ── WAIT FOR USER PROFILE BEFORE RUNNING ──
   function waitForUserProfile(callback, attempts = 0, maxAttempts = 40) {
     if (window._userProfile) {
-      console.log("[desktop-dashboard] User profile found:", window._userProfile);
+      console.log(
+        "[desktop-dashboard] User profile found:",
+        window._userProfile,
+      );
       callback();
     } else if (attempts < maxAttempts) {
-      setTimeout(() => waitForUserProfile(callback, attempts + 1, maxAttempts), 250);
+      setTimeout(
+        () => waitForUserProfile(callback, attempts + 1, maxAttempts),
+        250,
+      );
     } else {
-      console.warn("[desktop-dashboard] Timeout waiting for user profile, proceeding anyway");
+      console.warn(
+        "[desktop-dashboard] Timeout waiting for user profile, proceeding anyway",
+      );
       callback();
     }
   }

@@ -363,20 +363,20 @@ function showReceiptModal(txn) {
         });
   const cap = (str) => (str ? str.charAt(0).toUpperCase() + str.slice(1) : "—");
 
- // updated
-const statusClass = (s) =>
-  ({
-    successful: "bg-emerald-100 text-emerald-700",
-    pending: "bg-amber-100 text-amber-700",
-    failed: "bg-red-100 text-red-700",
-  })[s] || "bg-gray-100 text-gray-600";
+  // updated
+  const statusClass = (s) =>
+    ({
+      successful: "bg-emerald-100 text-emerald-700",
+      pending: "bg-amber-100 text-amber-700",
+      failed: "bg-red-100 text-red-700",
+    })[s] || "bg-gray-100 text-gray-600";
 
-const dotClass = (s) =>
-  ({
-    successful: "bg-emerald-500",
-    pending: "bg-amber-500",
-    failed: "bg-red-500",
-  })[s] || "bg-gray-400";
+  const dotClass = (s) =>
+    ({
+      successful: "bg-emerald-500",
+      pending: "bg-amber-500",
+      failed: "bg-red-500",
+    })[s] || "bg-gray-400";
 
   const optRow = (label, value) =>
     value && String(value).trim() !== ""
@@ -500,7 +500,8 @@ function downloadTransferReceiptPdf(txn) {
         });
   const cap = (str) => (str ? str.charAt(0).toUpperCase() + str.slice(1) : "—");
 
-  doc.setFillColor(14, 165, 233);
+  // Header bar — was (14, 165, 233)
+  doc.setFillColor(239, 68, 68);
   doc.rect(0, 0, 210, 28, "F");
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(16);
@@ -511,6 +512,7 @@ function downloadTransferReceiptPdf(txn) {
   doc.text("Local Transfer Receipt", 14, 20);
   doc.text(`Generated: ${new Date().toLocaleString()}`, 140, 20);
 
+  // Amount block
   doc.setFillColor(248, 250, 252);
   doc.rect(14, 35, 182, 22, "F");
   doc.setTextColor(15, 23, 42);
@@ -519,11 +521,11 @@ function downloadTransferReceiptPdf(txn) {
   doc.text("Amount", 20, 44);
   doc.setFontSize(18);
   doc.setFont("helvetica", "bold");
-  doc.setTextColor(14, 165, 233);
+  doc.setTextColor(239, 68, 68); // was (14, 165, 233)
   doc.text(fmtPdf(txn.amount), 20, 53);
 
   const statusColors = {
-      successful: [16, 185, 129],
+    successful: [16, 185, 129],
     completed: [16, 185, 129],
     approved: [16, 185, 129],
     pending: [245, 158, 11],

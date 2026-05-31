@@ -495,7 +495,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const d = txn.details || {};
 
     // Header
-    doc.setFillColor(14, 165, 233);
+    // Header
+    doc.setFillColor(239, 68, 68); // was (14, 165, 233)
     doc.rect(0, 0, 210, 28, "F");
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(16);
@@ -515,7 +516,7 @@ document.addEventListener("DOMContentLoaded", function () {
     doc.text("Amount", 20, 44);
     doc.setFontSize(18);
     doc.setFont("helvetica", "bold");
-    doc.setTextColor(14, 165, 233);
+    doc.setTextColor(239, 68, 68); // was (14, 165, 233)
     doc.text(amountDisplay, 20, 53);
 
     // Status

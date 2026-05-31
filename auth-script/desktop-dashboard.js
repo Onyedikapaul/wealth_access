@@ -331,101 +331,112 @@
   }
 
   // ---------- Render: chart ----------
-function renderChart(profitLoss) {
-  const canvas = $("#dd-profit-loss-chart");
-  if (!canvas || typeof Chart === "undefined") return;
+  function renderChart(profitLoss) {
+    const canvas = $("#dd-profit-loss-chart");
+    if (!canvas || typeof Chart === "undefined") return;
 
-  const labels = profitLoss.map((p) => p.month);
-  const profitData = profitLoss.map((p) => p.profit);
-  const lossData = profitLoss.map((p) => p.loss);
+    const labels = profitLoss.map((p) => p.month);
+    const profitData = profitLoss.map((p) => p.profit);
+    const lossData = profitLoss.map((p) => p.loss);
 
-  const dark = isDark();
-  const gridColor = dark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.04)";
-  const tickColor = dark ? "#6b7280" : "#9ca3af";
+    const dark = isDark();
+    const gridColor = dark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.04)";
+    const tickColor = dark ? "#6b7280" : "#9ca3af";
 
-  if (chartInstance) chartInstance.destroy();
+    if (chartInstance) chartInstance.destroy();
 
-  chartInstance = new Chart(canvas.getContext("2d"), {
-    type: "bar",
-    data: {
-      labels,
-      datasets: [
-        {
-          label: "Profit",
-          data: profitData,
-          backgroundColor: "#f97316",   // orange — swap for your primary-500 hex
-          hoverBackgroundColor: "#ea6c0a",
-          borderRadius: { topLeft: 6, topRight: 6, bottomLeft: 0, bottomRight: 0 },
-          borderSkipped: false,
-          barThickness: 16,
-          categoryPercentage: 0.7,
-          barPercentage: 0.85,
-        },
-        {
-          label: "Loss",
-          data: lossData,
-          backgroundColor: dark ? "#374151" : "#111827",
-          hoverBackgroundColor: dark ? "#4b5563" : "#1f2937",
-          borderRadius: { topLeft: 6, topRight: 6, bottomLeft: 0, bottomRight: 0 },
-          borderSkipped: false,
-          barThickness: 16,
-          categoryPercentage: 0.7,
-          barPercentage: 0.85,
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: {
-        mode: "index",
-        intersect: false,
+    chartInstance = new Chart(canvas.getContext("2d"), {
+      type: "bar",
+      data: {
+        labels,
+        datasets: [
+          {
+            label: "Profit",
+            data: profitData,
+            backgroundColor: "#ef4444", // red primary
+            hoverBackgroundColor: "#dc2626",
+            borderRadius: {
+              topLeft: 6,
+              topRight: 6,
+              bottomLeft: 0,
+              bottomRight: 0,
+            },
+            borderSkipped: false,
+            barThickness: 16,
+            categoryPercentage: 0.7,
+            barPercentage: 0.85,
+          },
+          {
+            label: "Loss",
+            data: lossData,
+            backgroundColor: dark ? "#ffffff" : "#111827", // white in dark, near-black in light
+            hoverBackgroundColor: dark ? "#e2e8f0" : "#1f2937",
+            borderRadius: {
+              topLeft: 6,
+              topRight: 6,
+              bottomLeft: 0,
+              bottomRight: 0,
+            },
+            borderSkipped: false,
+            barThickness: 16,
+            categoryPercentage: 0.7,
+            barPercentage: 0.85,
+          },
+        ],
       },
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: dark ? "#1f2937" : "#111827",
-          titleColor: "#fff",
-          bodyColor: "#d1d5db",
-          padding: 12,
-          cornerRadius: 10,
-          displayColors: true,
-          callbacks: {
-            label: (ctx) => ` ${ctx.dataset.label}: ${fmtFiat(ctx.parsed.y, 0)}`,
-          },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: {
+          mode: "index",
+          intersect: false,
         },
-      },
-      scales: {
-        x: {
-          grid: { display: false },
-          border: { display: false },
-          ticks: {
-            color: tickColor,
-            font: { size: 11 },
-          },
-        },
-        y: {
-          grid: {
-            color: gridColor,
-            drawBorder: false,
-          },
-          border: { display: false, dash: [4, 4] },
-          ticks: {
-            color: tickColor,
-            font: { size: 11 },
-            maxTicksLimit: 5,
-            callback: (v) => {
-              if (v >= 1000000) return `${v / 1000000}M`;
-              if (v >= 1000) return `${v / 1000}k`;
-              return v;
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: dark ? "#1f2937" : "#111827",
+            titleColor: "#fff",
+            bodyColor: "#d1d5db",
+            padding: 12,
+            cornerRadius: 10,
+            displayColors: true,
+            callbacks: {
+              label: (ctx) =>
+                ` ${ctx.dataset.label}: ${fmtFiat(ctx.parsed.y, 0)}`,
             },
           },
-          beginAtZero: true,
+        },
+        scales: {
+          x: {
+            grid: { display: false },
+            border: { display: false },
+            ticks: {
+              color: tickColor,
+              font: { size: 11 },
+            },
+          },
+          y: {
+            grid: {
+              color: gridColor,
+              drawBorder: false,
+            },
+            border: { display: false, dash: [4, 4] },
+            ticks: {
+              color: tickColor,
+              font: { size: 11 },
+              maxTicksLimit: 5,
+              callback: (v) => {
+                if (v >= 1000000) return `${v / 1000000}M`;
+                if (v >= 1000) return `${v / 1000}k`;
+                return v;
+              },
+            },
+            beginAtZero: true,
+          },
         },
       },
-    },
-  });
-}
+    });
+  }
 
   // ---------- Render: activities ----------
   function renderActivities(activities) {

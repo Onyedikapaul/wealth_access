@@ -21,6 +21,8 @@ async function loadUserProfile() {
 
     const u = data.user;
 
+    console.log("User profile data:", u); // Debug log to verify data structure
+
     // ── Grab currency info from user's country ─────────────────────────────
     const symbol = getCurrencySymbol(u.country); // e.g. "₦" for Nigeria
     const code   = getCurrencyCode(u.country);   // e.g. "NGN"
@@ -39,6 +41,7 @@ async function loadUserProfile() {
     setTextByClass("user-accounttype",    u.accounttype);
     setTextByClass("user-account-number", u.accountNumber);
     setTextByClass("user-status",         u.accountStatus);
+    setTextByClass("daily-transaction-limit", u.transactionLimit ? fmt(u.transactionLimit) : "N/A");
 
     // ── Card counts (no currency needed) ──────────────────────────────────
     setTextByClass("user-total-cards",   u.totalCards);

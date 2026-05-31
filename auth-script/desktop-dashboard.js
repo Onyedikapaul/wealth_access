@@ -439,64 +439,61 @@
   }
 
   // ---------- Render: activities ----------
-  function renderActivities(activities) {
-    const tbody = $("#dd-activities-body");
-    if (!tbody) return;
+function renderActivities(activities) {
+  const tbody = $("#dd-activities-body");
+  if (!tbody) return;
 
-    if (!activities || activities.length === 0) {
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="7" class="px-5 py-12 text-center text-xs text-gray-400">
-            <i class="fa-solid fa-inbox text-2xl mb-2 block"></i>
-            No recent activities yet
-          </td>
-        </tr>`;
-      return;
-    }
-
-    tbody.innerHTML = activities
-      .slice(0, 10)
-      .map((a) => {
-        const icon = activityIcon(a);
-        const status = (a.status || "pending").toLowerCase();
-        const pill = statusStyles[status] || statusStyles.pending;
-        const dot = statusDot[status] || statusDot.pending;
-        const iconClass = icon.brand
-          ? `fa-brands ${icon.icon}`
-          : `fa-solid ${icon.icon}`;
-        const amountColor =
-          a.type === "credit"
-            ? "text-green-600 dark:text-green-400"
-            : "text-gray-900 dark:text-white";
-        const amountPrefix = a.type === "credit" ? "+" : "";
-
-        return `
-          <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors" data-status="${status}" data-search="${(a.orderId || "") + " " + (a.activity || "")}">
-            <td class="px-5 py-4"><input type="checkbox" class="rounded border-gray-300 dark:border-gray-600"></td>
-            <td class="px-5 py-4 text-xs font-mono text-gray-600 dark:text-gray-300">${a.orderId || "—"}</td>
-            <td class="px-5 py-4">
-              <div class="flex items-center gap-2.5">
-                <div class="w-7 h-7 ${icon.color} rounded-lg flex items-center justify-center">
-                  <i class="${iconClass} text-xs"></i>
-                </div>
-                <span class="text-xs font-medium text-gray-900 dark:text-white">${a.activity || a.method || "Transfer"}</span>
-              </div>
-            </td>
-            <td class="px-5 py-4 text-right text-xs font-semibold ${amountColor}">${amountPrefix}${fmtFiat(a.amount)}</td>
-            <td class="px-5 py-4">
-              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium ${pill}">
-                <span class="w-1.5 h-1.5 rounded-full ${dot}"></span>
-                ${status.charAt(0).toUpperCase() + status.slice(1)}
-              </span>
-            </td>
-            <td class="px-5 py-4 text-xs text-gray-500 dark:text-gray-400">${formatDate(a.date)}</td>
-            <td class="px-5 py-4 text-center">
-              <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><i class="fa-solid fa-ellipsis text-xs"></i></button>
-            </td>
-          </tr>`;
-      })
-      .join("");
+  if (!activities || activities.length === 0) {
+    tbody.innerHTML = `
+      <div class="px-5 py-12 text-center text-xs text-gray-400">
+        <i class="fa-solid fa-inbox text-2xl mb-2 block"></i>
+        No recent activities yet
+      </div>`;
+    return;
   }
+
+  tbody.innerHTML = activities.slice(0, 3).map((a) => {
+    const icon = activityIcon(a);
+    const status = (a.status || "pending").toLowerCase();
+    const pill = statusStyles[status] || statusStyles.pending;
+    const dot = statusDot[status] || statusDot.pending;
+    const iconClass = icon.brand ? `fa-brands ${icon.icon}` : `fa-solid ${icon.icon}`;
+    const amountColor = a.type === "credit" ? "text-green-600 dark:text-green-400" : "text-gray-900 dark:text-white";
+    const amountPrefix = a.type === "credit" ? "+" : "";
+
+    return `
+  <div class="grid grid-cols-3 md:grid-cols-4 items-center px-5 py-3.5 hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors"
+       data-status="${status}" data-search="${(a.orderId || "") + " " + (a.activity || "")}">
+    
+    <!-- Activity -->
+    <div class="flex items-center gap-2.5 min-w-0">
+      <div class="w-8 h-8 flex-shrink-0 ${icon.color} rounded-lg flex items-center justify-center">
+        <i class="${iconClass} text-xs"></i>
+      </div>
+      <p class="text-xs font-medium text-gray-900 dark:text-white truncate">${a.activity || a.method || "Transfer"}</p>
+    </div>
+
+    <!-- Amount -->
+    <div class="text-xs font-semibold ${amountColor} text-center whitespace-nowrap">
+      ${amountPrefix}${fmtFiat(a.amount)}
+    </div>
+
+    <!-- Status -->
+    <div class="flex justify-center">
+      <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium ${pill}">
+        <span class="w-1.5 h-1.5 rounded-full ${dot}"></span>
+        ${status.charAt(0).toUpperCase() + status.slice(1)}
+      </span>
+    </div>
+
+    <!-- Date -->
+    <div class="text-xs text-gray-500 dark:text-gray-400 text-right whitespace-nowrap hidden md:block">
+      ${formatDate(a.date)}
+    </div>
+
+  </div>`;
+  }).join("");
+}
 
   // ---------- Inject card-specific CSS ----------
   function injectCardStyles() {

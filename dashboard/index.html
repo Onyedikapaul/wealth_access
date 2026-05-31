@@ -530,7 +530,7 @@
     }
 </script></head>
 
-<body class="bg-background text-foreground">
+<body class="bg-background text-foreground overflow-x-hidden">
     <!-- Ultra Modern Page Loader -->
     <div class="page-loading active">
         <div class="page-loading-inner">
@@ -682,7 +682,7 @@ x-init="
      - Sidebar, header, theme toggle, floating mobile nav, modals = UNTOUCHED
      - Data populated by /auth-script/desktop-dashboard.js
      ========================================================= -->
-<div class="py-4 sm:py-6 mb-6">
+<div class="py-4 sm:py-6">
 
   <!-- ============== HEADING + TABS (tabs hidden on mobile) ============== -->
   <div class="px-4 sm:px-6 mb-5 sm:mb-6">
@@ -706,13 +706,13 @@ x-init="
   </div>
 
   <!-- ============== STAT CARDS (4) — responsive grid ============== -->
-  <!-- ============== STAT CARDS — Total Balance left + 2x2 grid right ============== -->
 <div class="px-4 sm:px-6 mb-5 sm:mb-6">
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
+  <div class="flex flex-col lg:flex-row gap-3 sm:gap-4">
 
-    <!-- Total Balance (tall card, spans 1 col on desktop) -->
-    <!-- Total Balance (tall card, spans 1 col on desktop) -->
-<div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700 flex flex-col justify-between">
+   <!-- LEFT: Total Balance + Quick Actions -->
+<div class="w-full lg:w-1/3 bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700 flex flex-col justify-between gap-4">
+
+  <!-- Balance -->
   <div>
     <div class="flex items-center justify-between mb-3">
       <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Total Balance</span>
@@ -721,87 +721,166 @@ x-init="
       </span>
     </div>
     <h3 class="dd-total-balance text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight">$0.00</h3>
-    <p class="text-xs text-green-600 dark:text-green-400 font-medium mb-4">
+    <p class="text-xs text-green-600 dark:text-green-400 font-medium">
       <i class="fa-solid fa-arrow-up text-[10px]"></i>
       <span class="dd-balance-change">5%</span> than last month
     </p>
+  </div>
 
-    <!-- Transfer + Request buttons -->
-    <div class="flex gap-2 mb-4">
-      <a href="/dashboard/localtransfer.html"
-         class="flex-1 bg-gray-900 dark:bg-primary-500 hover:bg-gray-800 dark:hover:bg-primary-600 text-white text-xs font-medium px-3 py-2.5 rounded-lg flex items-center justify-center gap-1.5 transition-colors">
-        <i class="fa-solid fa-paper-plane text-xs"></i> Transfer
+  <!-- Divider -->
+  <div class="border-t border-gray-100 dark:border-gray-700"></div>
+
+  <!-- Quick Actions -->
+  <div class="flex-1 flex flex-col justify-between">
+    <h4 class="text-sm font-semibold text-gray-900 dark:text-white mb-3">Quick Actions</h4>
+    <div class="grid grid-cols-3 gap-2 mb-4">
+      <a href="/dashboard/localtransfer.html" class="flex flex-col items-center p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+        <div class="w-9 h-9 bg-blue-50 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-1.5">
+          <i class="fa-solid fa-exchange-alt text-blue-600 dark:text-blue-400 text-xs"></i>
+        </div>
+        <span class="text-[10px] font-medium text-gray-700 dark:text-gray-300 text-center">Transfer</span>
       </a>
-      <!-- <button class="flex-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white text-xs font-medium px-3 py-2.5 rounded-lg flex items-center justify-center gap-1.5 transition-colors">
-        <i class="fa-solid fa-arrow-down text-xs"></i> Request
-      </button> -->
+      <a href="/dashboard/internationaltransfer.html" class="flex flex-col items-center p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+        <div class="w-9 h-9 bg-green-50 dark:bg-green-900/30 rounded-lg flex items-center justify-center mb-1.5">
+          <i class="fa-solid fa-globe text-green-600 dark:text-green-400 text-xs"></i>
+        </div>
+        <span class="text-[10px] font-medium text-gray-700 dark:text-gray-300 text-center">Wire</span>
+      </a>
+      <a href="/dashboard/cards.html" class="flex flex-col items-center p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+        <div class="w-9 h-9 bg-purple-50 dark:bg-purple-900/30 rounded-lg flex items-center justify-center mb-1.5">
+          <i class="fa-solid fa-credit-card text-purple-600 dark:text-purple-400 text-xs"></i>
+        </div>
+        <span class="text-[10px] font-medium text-gray-700 dark:text-gray-300 text-center">Cards</span>
+      </a>
     </div>
 
-    <!-- Wallets row -->
-    
+    <!-- Full width Transfer CTA at bottom -->
+    <a href="/dashboard/internationaltransfer.html"
+       class="w-full bg-gray-900 dark:bg-primary-500 hover:bg-gray-800 dark:hover:bg-primary-600 text-white text-xs font-medium px-3 py-2.5 rounded-lg flex items-center justify-center gap-1.5 transition-colors">
+      <i class="fa-solid fa-paper-plane text-xs"></i> International Transfer
+    </a>
   </div>
+
 </div>
 
-    <!-- 2x2 Grid of 4 stat cards -->
-    <div class="lg:col-span-2 grid grid-cols-2 gap-3 sm:gap-4">
+    <!-- RIGHT: 2x2 stat grid -->
+    <div class="w-full lg:w-2/3 grid grid-cols-2 gap-3 sm:gap-4">
 
-      <!-- Total Earnings (highlighted orange/primary) -->
-      <div class="bg-primary-500 dark:bg-primary-600 rounded-2xl p-4 sm:p-5 text-white relative overflow-hidden">
-        <div class="absolute -top-4 -right-4 w-24 h-24 bg-white/10 rounded-full"></div>
-        <div class="absolute -bottom-6 -left-6 w-20 h-20 bg-white/5 rounded-full"></div>
-        <div class="relative">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-xs font-medium text-white/80">Total Earnings</span>
-            <i class="fa-solid fa-ellipsis text-white/70 text-xs"></i>
+<!-- Total Revenue -->
+<div class="bg-primary-500 dark:bg-primary-600 rounded-2xl p-4 sm:p-5">
+  <div class="flex items-center justify-between mb-3">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+        <i class="fa-solid fa-chart-line text-white text-xs"></i>
+      </div>
+      <span class="text-xs font-medium text-white/80">Total Revenue</span>
+    </div>
+    <i class="fa-solid fa-ellipsis text-white/70 text-xs"></i>
+  </div>
+  <h3 class="dd-total-revenue text-xl sm:text-2xl font-bold text-white mb-1 tracking-tight">$0.00</h3>
+  <p class="text-xs text-white/90 font-medium">
+    <i class="fa-solid fa-arrow-up text-[10px]"></i>
+    <span class="dd-revenue-change">4%</span> This month
+  </p>
+</div>
+
+<!-- Total Spending -->
+<div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700">
+  <div class="flex items-center justify-between mb-3">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-red-50 dark:bg-red-900/30 rounded-lg flex items-center justify-center">
+        <i class="fa-solid fa-arrow-trend-down text-red-500 dark:text-red-400 text-xs"></i>
+      </div>
+      <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Total Spending</span>
+    </div>
+    <i class="fa-solid fa-ellipsis text-gray-400 text-xs"></i>
+  </div>
+  <h3 class="dd-total-spending text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-1 tracking-tight">$0.00</h3>
+  <p class="text-xs text-red-500 dark:text-red-400 font-medium">
+    <i class="fa-solid fa-arrow-down text-[10px]"></i>
+    <span class="dd-spending-change">5%</span> This month
+  </p>
+</div>
+
+    <!-- Spending Limit + Wallets: full width on mobile, 2 cols on sm+ -->
+<div class="col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+
+  <!-- Monthly Spending Limit -->
+ <!-- Monthly Spending Limit -->
+<div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700 h-full flex flex-col justify-between">
+  
+  <!-- Top -->
+  <div>
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-primary-50 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+          <i class="fa-solid fa-gauge-high text-primary-500 dark:text-primary-400 text-xs"></i>
+        </div>
+        <h4 class="text-sm font-semibold text-gray-900 dark:text-white">Monthly Spending Limit</h4>
+      </div>
+      <i class="fa-solid fa-ellipsis text-gray-400 text-xs"></i>
+    </div>
+
+    <div class="relative h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden mb-3">
+      <div id="dd-spending-bar" class="absolute left-0 top-0 h-full bg-gradient-to-r from-primary-500 to-primary-400 rounded-full transition-all duration-500" style="width: 25%"></div>
+    </div>
+    <div class="flex items-center justify-between text-xs mb-4">
+      <span class="dd-spent text-gray-900 dark:text-white font-semibold">$0.00</span>
+      <span class="text-gray-400 dark:text-gray-500">spent of</span>
+      <span class="dd-tx-limit text-gray-900 dark:text-white font-semibold">$0.00</span>
+    </div>
+  </div>
+
+  <!-- Bottom filler -->
+  <div class="p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
+    <p class="text-[10px] text-gray-500 dark:text-gray-400 mb-1">Limit resets daily</p>
+    <div class="flex items-center justify-between">
+      <span class="text-xs font-semibold text-gray-900 dark:text-white">Transaction Limit</span>
+      <span class="dd-tx-limit text-xs font-bold text-primary-500">$0</span>
+    </div>
+  </div>
+
+</div>
+
+  <!-- Wallets -->
+  <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700">
+    <div class="flex items-center justify-between mb-3">
+      <h4 class="text-sm font-semibold text-gray-900 dark:text-white">
+        Wallets <span class="text-xs text-gray-400 font-normal">| <span class="dd-wallet-count">2</span></span>
+      </h4>
+    </div>
+    <div class="space-y-2">
+      <div class="flex items-center justify-between p-2.5 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900/40 rounded-lg flex items-center justify-center">
+            <i class="fa-solid fa-dollar-sign text-blue-600 dark:text-blue-400 text-xs"></i>
           </div>
-          <h3 class="dd-total-earnings text-xl sm:text-2xl font-bold mb-1 tracking-tight">$0.00</h3>
-          <p class="text-xs text-white/90 font-medium">
-            <i class="fa-solid fa-arrow-down text-[10px]"></i>
-            <span class="dd-earnings-change">7%</span> This month
-          </p>
+          <div>
+            <p class="text-xs font-semibold text-gray-900 dark:text-white">USD</p>
+            <p class="dd-fiat-balance text-[10px] text-gray-500 dark:text-gray-400 truncate max-w-[80px]">$0.00</p>
+          </div>
         </div>
+        <span class="text-[10px] text-green-600 dark:text-green-400 font-semibold px-1.5 py-0.5 bg-green-50 dark:bg-green-900/30 rounded-full">Active</span>
       </div>
+      <div class="flex items-center justify-between p-2.5 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-orange-100 dark:bg-orange-900/40 rounded-lg flex items-center justify-center">
+            <i class="fa-brands fa-bitcoin text-orange-600 dark:text-orange-400 text-xs"></i>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-gray-900 dark:text-white">BTC</p>
+            <p class="dd-btc-balance text-[10px] text-gray-500 dark:text-gray-400 truncate max-w-[80px]">0.000000 BTC</p>
+          </div>
+        </div>
+        <span class="text-[10px] text-green-600 dark:text-green-400 font-semibold px-1.5 py-0.5 bg-green-50 dark:bg-green-900/30 rounded-full">Active</span>
+      </div>
+    </div>
+  </div>
 
-      <!-- Total Spending -->
-      <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Total Spending</span>
-          <i class="fa-solid fa-ellipsis text-gray-400 text-xs"></i>
-        </div>
-        <h3 class="dd-total-spending text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-1 tracking-tight">$0.00</h3>
-        <p class="text-xs text-red-500 dark:text-red-400 font-medium">
-          <i class="fa-solid fa-arrow-down text-[10px]"></i>
-          <span class="dd-spending-change">5%</span> This month
-        </p>
-      </div>
-
-      <!-- Total Income -->
-      <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Total Income</span>
-          <i class="fa-solid fa-ellipsis text-gray-400 text-xs"></i>
-        </div>
-        <h3 class="dd-total-income text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-1 tracking-tight">$0.00</h3>
-        <p class="text-xs text-green-600 dark:text-green-400 font-medium">
-          <i class="fa-solid fa-arrow-up text-[10px]"></i>
-          <span class="dd-income-change">8%</span> This month
-        </p>
-      </div>
-
-      <!-- Total Revenue -->
-      <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Total Revenue</span>
-          <i class="fa-solid fa-ellipsis text-gray-400 text-xs"></i>
-        </div>
-        <h3 class="dd-total-revenue text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-1 tracking-tight">$0.00</h3>
-        <p class="text-xs text-green-600 dark:text-green-400 font-medium">
-          <i class="fa-solid fa-arrow-up text-[10px]"></i>
-          <span class="dd-revenue-change">4%</span> This month
-        </p>
-      </div>
+</div>
 
     </div>
+
   </div>
 </div>
 
@@ -839,57 +918,8 @@ x-init="
         </div>
       </div>
 
-      <!-- Monthly Spending Limit + Quick Actions row -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-
-        <!-- Spending Limit -->
-        <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700">
-          <h4 class="text-sm font-semibold text-gray-900 dark:text-white mb-4">Monthly Spending Limit</h4>
-          <div class="relative h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden mb-3">
-            <div id="dd-spending-bar" class="absolute left-0 top-0 h-full bg-gradient-to-r from-primary-500 to-primary-400 rounded-full transition-all duration-500" style="width: 25%"></div>
-          </div>
-          <div class="flex items-center justify-between text-xs">
-            <span class="dd-spent text-gray-900 dark:text-white font-semibold">$0.00</span>
-            <span class="text-gray-400 dark:text-gray-500 hidden sm:inline">spent out of</span>
-            <span class="dd-limit text-gray-900 dark:text-white font-semibold">$0.00</span>
-          </div>
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700">
-          <h4 class="text-sm font-semibold text-gray-900 dark:text-white mb-4">Quick Actions</h4>
-          <div class="grid grid-cols-4 gap-2">
-            <a href="/dashboard/localtransfer.html" class="flex flex-col items-center p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-              <div class="w-9 h-9 bg-blue-50 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-1.5">
-                <i class="fa-solid fa-exchange-alt text-blue-600 dark:text-blue-400 text-xs"></i>
-              </div>
-              <span class="text-[10px] font-medium text-gray-700 dark:text-gray-300 text-center">Transfer</span>
-            </a>
-            <a href="/dashboard/internationaltransfer.html" class="flex flex-col items-center p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-              <div class="w-9 h-9 bg-green-50 dark:bg-green-900/30 rounded-lg flex items-center justify-center mb-1.5">
-                <i class="fa-solid fa-globe text-green-600 dark:text-green-400 text-xs"></i>
-              </div>
-              <span class="text-[10px] font-medium text-gray-700 dark:text-gray-300 text-center">Wire</span>
-            </a>
-            <a href="/dashboard/cards.html" class="flex flex-col items-center p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-              <div class="w-9 h-9 bg-purple-50 dark:bg-purple-900/30 rounded-lg flex items-center justify-center mb-1.5">
-                <i class="fa-solid fa-credit-card text-purple-600 dark:text-purple-400 text-xs"></i>
-              </div>
-              <span class="text-[10px] font-medium text-gray-700 dark:text-gray-300 text-center">Cards</span>
-            </a>
-            <!-- <button onclick="document.querySelector('[x-data]').__x.$data.showBankAccount = true"
-                    class="flex flex-col items-center p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-              <div class="w-9 h-9 bg-orange-50 dark:bg-orange-900/30 rounded-lg flex items-center justify-center mb-1.5">
-                <i class="fa-solid fa-building-columns text-orange-600 dark:text-orange-400 text-xs"></i>
-              </div>
-              <span class="text-[10px] font-medium text-gray-700 dark:text-gray-300 text-center">Bank</span>
-            </button> -->
-          </div>
-        </div>
-      </div>
-
       <!-- My Cards Section -->
-      <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700">
+      <!-- <div class="bg-white dark:bg-gray-800 w-full rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700">
         <div class="flex items-center justify-between mb-4">
           <h4 class="text-sm font-semibold text-gray-900 dark:text-white">My Cards</h4>
           <a href="/dashboard/cards.html" class="text-xs text-primary-600 dark:text-primary-400 font-medium hover:text-primary-700 dark:hover:text-primary-300 flex items-center gap-1">
@@ -899,47 +929,14 @@ x-init="
         <div class="userCardsMount"></div>
           <script src="/auth-script/user-cards.js"></script>
 
-      </div>
+      </div> -->
     </div>
+
+  
 
     <!-- =========== RIGHT COLUMN =========== -->
     <div class="space-y-4 sm:space-y-6">
-
-      <!-- Wallets / Account Card -->
-      <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700">
-        <div class="flex items-center justify-between mb-4">
-          <h4 class="text-sm font-semibold text-gray-900 dark:text-white">
-            Wallets <span class="text-xs text-gray-400 font-normal">| <span class="dd-wallet-count">2</span> wallets</span>
-          </h4>
-        </div>
-        <div class="space-y-2">
-          <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
-            <div class="flex items-center gap-3">
-              <div class="w-9 h-9 bg-blue-100 dark:bg-blue-900/40 rounded-lg flex items-center justify-center">
-                <i class="fa-solid fa-dollar-sign text-blue-600 dark:text-blue-400 text-sm"></i>
-              </div>
-              <div>
-                <p class="text-xs font-semibold text-gray-900 dark:text-white">USD</p>
-                <p class="dd-fiat-balance text-[10px] text-gray-500 dark:text-gray-400">$0.00</p>
-              </div>
-            </div>
-            <span class="text-[10px] text-green-600 dark:text-green-400 font-semibold px-2 py-0.5 bg-green-50 dark:bg-green-900/30 rounded-full">Active</span>
-          </div>
-          <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
-            <div class="flex items-center gap-3">
-              <div class="w-9 h-9 bg-orange-100 dark:bg-orange-900/40 rounded-lg flex items-center justify-center">
-                <i class="fa-brands fa-bitcoin text-orange-600 dark:text-orange-400 text-sm"></i>
-              </div>
-              <div>
-                <p class="text-xs font-semibold text-gray-900 dark:text-white">BTC</p>
-                <p class="dd-btc-balance text-[10px] text-gray-500 dark:text-gray-400">0.000000 BTC</p>
-              </div>
-            </div>
-            <span class="text-[10px] text-green-600 dark:text-green-400 font-semibold px-2 py-0.5 bg-green-50 dark:bg-green-900/30 rounded-full">Active</span>
-          </div>
-        </div>
-      </div>
-
+    
       <!-- Account Statistics -->
       <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700">
         <div class="flex items-center gap-2 mb-4">
@@ -977,53 +974,63 @@ x-init="
     </div>
   </div>
 
-  <!-- ============== RECENT ACTIVITIES TABLE (horizontal scroll on mobile) ============== -->
-  <div class="px-4 sm:px-6 mb-20 sm:mb-6">
-    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden">
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 sm:p-5 border-b border-gray-100 dark:border-gray-700">
-        <h3 class="text-base font-semibold text-gray-900 dark:text-white">Recent Activities</h3>
-        <div class="flex items-center gap-2 flex-wrap">
-          <div class="relative flex-1 sm:flex-initial min-w-0">
-            <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
-            <input id="dd-search" type="text" placeholder="Search"
-                   class="pl-8 pr-3 py-1.5 text-xs bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-primary-500 w-full sm:w-44">
-          </div>
-          <!-- <button class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600">
-            <i class="fa-solid fa-filter text-[10px]"></i> <span class="hidden sm:inline">Filter</span>
-          </button> -->
-          <a href="/dashboard/accounthistory.html"
-             class="text-xs text-primary-600 dark:text-primary-400 font-medium hover:text-primary-700 dark:hover:text-primary-300 whitespace-nowrap">View All</a>
-        </div>
-      </div>
+   <div class="flex flex-col lg:flex-row gap-4 px-4 sm:px-6 overflow-hidden">
 
-      <div class="overflow-x-auto">
-        <table class="w-full min-w-[640px]">
-          <thead>
-            <tr class="bg-gray-50 dark:bg-gray-700/50 text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400">
-              <th class="px-4 sm:px-5 py-3 text-left font-medium w-10">
-                <input type="checkbox" class="rounded border-gray-300 dark:border-gray-600">
-              </th>
-              <th class="px-4 sm:px-5 py-3 text-left font-medium">Order ID</th>
-              <th class="px-4 sm:px-5 py-3 text-left font-medium">Activity</th>
-              <th class="px-4 sm:px-5 py-3 text-right font-medium">Amount</th>
-              <th class="px-4 sm:px-5 py-3 text-left font-medium">Status</th>
-              <th class="px-4 sm:px-5 py-3 text-left font-medium">Date</th>
-              <th class="px-4 sm:px-5 py-3 text-center font-medium w-12"></th>
-            </tr>
-          </thead>
-          <tbody id="dd-activities-body" class="divide-y divide-gray-100 dark:divide-gray-700">
-            <tr>
-              <td colspan="7" class="px-5 py-12 text-center text-xs text-gray-400">
-                <div class="inline-flex items-center gap-2">
-                  <i class="fa-solid fa-spinner fa-spin"></i> Loading activities...
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+  <!-- Cards (40% on desktop, full width on mobile) -->
+  <div class="w-full lg:min-w-[40%]">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between mb-4">
+        <h4 class="text-sm font-semibold text-gray-900 dark:text-white">My Cards</h4>
+        <a href="/dashboard/cards.html" class="text-xs text-primary-600 dark:text-primary-400 font-medium hover:text-primary-700 dark:hover:text-primary-300 flex items-center gap-1">
+          <i class="fa-solid fa-plus text-[10px]"></i> Add new
+        </a>
       </div>
+      <div class="userCardsMount"></div>
+      <script src="/auth-script/user-cards.js"></script>
     </div>
   </div>
+
+  <!-- Recent Activities (60% on desktop, full width on mobile) -->
+  <!-- ============== RECENT ACTIVITIES ============== -->
+<div class="mb-20 sm:mb-6 w-full lg:min-w-[60%]">
+  <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden w-full">
+    
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 sm:p-5 border-b border-gray-100 dark:border-gray-700">
+      <h3 class="text-base font-semibold text-gray-900 dark:text-white">Recent Activities</h3>
+      <div class="flex items-center gap-2">
+        <div class="relative flex-1 sm:flex-initial">
+          <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+          <input id="dd-search" type="text" placeholder="Search"
+                 class="pl-8 pr-3 py-1.5 text-xs bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-primary-500 w-full sm:w-44">
+        </div>
+        <a href="/dashboard/accounthistory.html"
+           class="text-xs text-primary-600 dark:text-primary-400 font-medium hover:text-primary-700 dark:hover:text-primary-300 whitespace-nowrap">View All</a>
+      </div>
+    </div>
+
+<div class="grid grid-cols-3 md:grid-cols-4 px-5 py-2.5 bg-gray-50 dark:bg-gray-700/50 text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400 font-medium">
+  <div>Activity</div>
+  <div class="text-center">Amount</div>
+  <div class="text-center">Status</div>
+  <div class="text-right hidden md:block">Date</div>
+</div>
+
+    <!-- Activity rows -->
+    <div id="dd-activities-body" class="divide-y divide-gray-100 dark:divide-gray-700">
+      <div class="px-5 py-12 text-center text-xs text-gray-400">
+        <div class="inline-flex items-center gap-2">
+          <i class="fa-solid fa-spinner fa-spin"></i> Loading activities...
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+
+ 
 </div>
 
 <!-- Dashboard logic -->

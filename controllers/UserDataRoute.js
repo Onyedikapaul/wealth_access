@@ -11,7 +11,7 @@ const UserDataRouterNew = e.Router();
 UserDataRouterNew.get("/profile", checkAuth, async (req, res) => {
   try {
     const user = await UserModel.findById(req.user._id).select(
-      "name middlename lastname username email phone country accounttype accountNumber balance crypto_balance avatarUrl isVerified accountStatus",
+      "name middlename lastname username email phone country accounttype accountNumber balance crypto_balance avatarUrl isVerified accountStatus transactionLimit createdAt",
     );
     if (!user)
       return res
@@ -129,6 +129,8 @@ UserDataRouterNew.get("/profile", checkAuth, async (req, res) => {
         totalCards,
         activeCards,
         pendingCards,
+        transactionLimit: user.transactionLimit || null,
+        createdAt: user.createdAt,
       },
     });
   } catch (err) {

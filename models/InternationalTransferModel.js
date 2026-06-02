@@ -7,10 +7,15 @@ const internationalTransferSchema = new mongoose.Schema({
     required: true,
     index: true,
   },
+  // type: {
+  //   type: String,
+  //   enum: ["international", "local"],
+  //   default: "international",
+  // },
   type: {
     type: String,
-    enum: ["international", "local"],
-    default: "international",
+    enum: ["credit", "debit"],
+    default: "debit",
   },
   method: {
     type: String,
@@ -41,7 +46,14 @@ const internationalTransferSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["pending", "processing", "completed", "successful", "cancelled", "failed"],
+    enum: [
+      "pending",
+      "processing",
+      "completed",
+      "successful",
+      "cancelled",
+      "failed",
+    ],
     default: "pending",
   },
   adminNote: {

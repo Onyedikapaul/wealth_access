@@ -1,0 +1,28 @@
+
+
+.ENV Variables
+
+PORT=4000
+
+MONGO_URI=mongodb://wealthaccess029_db_user:yTefAlTuKwun13wZ@ac-apqwezq-shard-00-00.z2ib2pa.mongodb.net:27017,ac-apqwezq-shard-00-01.z2ib2pa.mongodb.net:27017,ac-apqwezq-shard-00-02.z2ib2pa.mongodb.net:27017/?ssl=true&replicaSet=atlas-qbs5to-shard-0&authSource=admin&appName=WealthAccess
+
+ADMIN_EMAIL=info@wealth-access-intl.pro
+ADMIN_PASSWORD=@yTefAlTuKwun13wZ
+
+NODE_ENV=development
+
+SITE_NAME=Wealth Access
+APP_URL=https://wealth-access-intl.pro
+
+JWT_SECRET=jhchcjv5y6y7u6368u55469u0oijijoj
+
+RESEND_API_KEY=re_cApmCsMC_P6RS4s9mXR89CMT316nJP7qR
+
+CLOUDINARY_CLOUD_NAME=dyvhvxjnv
+CLOUDINARY_API_KEY=336834497385774
+CLOUDINARY_API_SECRET=5Jv06_rhaOg5vqXMoFGRngUQe-4
+
+TURNSTILE_SITE_KEY=0x4AAAAAADXIG0ysAr69cOGM
+TURNSTILE_SECRET_KEY=0x4AAAAAADXIGxUyZ2XnIf1S3r7mNId3Ywg
+
+APP_EMAIL=wealthaccess029@gmail.com

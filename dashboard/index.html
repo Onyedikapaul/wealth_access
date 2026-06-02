@@ -822,25 +822,35 @@ x-init="
     </div>
 
     <div class="relative h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden mb-3">
-      <div id="dd-spending-bar" class="absolute left-0 top-0 h-full bg-gradient-to-r from-primary-500 to-primary-400 rounded-full transition-all duration-500" style="width: 25%"></div>
+      <div id="sl-bar" class="absolute left-0 top-0 h-full bg-gradient-to-r from-primary-500 to-primary-400 rounded-full transition-all duration-700" style="width: 0%"></div>
     </div>
+
     <div class="flex items-center justify-between text-xs mb-4">
-      <span class="dd-spent text-gray-900 dark:text-white font-semibold">$0.00</span>
+      <span id="sl-spent" class="text-gray-900 dark:text-white font-semibold">
+        <span class="inline-block w-16 h-3 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></span>
+      </span>
       <span class="text-gray-400 dark:text-gray-500">spent of</span>
-      <span class="dd-tx-limit text-gray-900 dark:text-white font-semibold">$0.00</span>
+      <span id="sl-limit" class="text-gray-900 dark:text-white font-semibold">
+        <span class="inline-block w-16 h-3 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></span>
+      </span>
     </div>
   </div>
 
-  <!-- Bottom filler -->
+  <!-- Bottom -->
   <div class="p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
     <p class="text-[10px] text-gray-500 dark:text-gray-400 mb-1">Limit resets daily</p>
     <div class="flex items-center justify-between">
       <span class="text-xs font-semibold text-gray-900 dark:text-white">Transaction Limit</span>
-      <span class="dd-tx-limit text-xs font-bold text-primary-500">$0</span>
+      <span id="sl-tx-limit" class="text-xs font-bold text-primary-500">
+        <span class="inline-block w-20 h-3 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></span>
+      </span>
     </div>
   </div>
 
 </div>
+
+<script src="/auth-script/spending-limit.js"></script>
+
 
   <!-- Wallets -->
   <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-gray-700">
@@ -954,10 +964,22 @@ x-init="
                 <p class="dd-tx-limit text-xs font-bold text-gray-900 dark:text-white">$0</p>
               </div>
             </div>
-            <p class="text-[10px] text-gray-500 dark:text-gray-400 ml-11">Daily limit available</p>
+            <p class="text-[10px] text-gray-500 dark:text-gray-400 ml-11">Monthly limit available</p>
           </div>
 
-          <div class="p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
+            <div class="p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
+            <div class="flex items-center gap-3 mb-1">
+              <div class="w-8 h-8 bg-yellow-100 dark:bg-yellow-900/40 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-chart-line text-white/70 text-xs"></i>
+              </div>
+              <div>
+                <p class="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Total Revenue</p>
+                <p class="dd-total-revenue text-xs font-bold text-gray-900 dark:text-white">$0</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
             <div class="flex items-center gap-3 mb-1">
               <div class="w-8 h-8 bg-yellow-100 dark:bg-yellow-900/40 rounded-lg flex items-center justify-center">
                 <i class="fa-solid fa-hourglass-half text-yellow-600 dark:text-yellow-400 text-xs"></i>
@@ -968,7 +990,7 @@ x-init="
               </div>
             </div>
             <p class="dd-pending-count text-[10px] text-gray-500 dark:text-gray-400 ml-11">0 transactions</p>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

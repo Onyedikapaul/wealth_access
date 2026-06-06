@@ -27,14 +27,14 @@ function generateOTP() {
 // ─── Helper: send OTP email via Resend ───────────────────────
 async function sendVerificationEmail(email, name, otp) {
   await resend.emails.send({
-    from: process.env.EMAIL_FROM || "info@wealth-access-intl.pro",
+    from: process.env.EMAIL_FROM || "info@crestwealth-plc.com",
     to: email,
-    subject: "Verify your email – Wealth Access",
+    subject: "Verify your email – Crest Wealth",
     html: `
       <div style="font-family:Lato,sans-serif;max-width:520px;margin:0 auto;background:#f9fafb;border-radius:12px;overflow:hidden;">
         <div style="background:linear-gradient(135deg,#0ea5e9,#0369a1);padding:32px 24px;text-align:center;">
           <h1 style="color:white;font-size:22px;margin:0;">Email Verification</h1>
-          <p style="color:rgba(255,255,255,0.85);margin:8px 0 0;font-size:14px;">Wealth Access</p>
+          <p style="color:rgba(255,255,255,0.85);margin:8px 0 0;font-size:14px;">Crest Wealth</p>
         </div>
         <div style="padding:32px 24px;background:white;">
           <p style="color:#374151;font-size:15px;margin:0 0 8px;">Hi <strong>${name}</strong>,</p>
@@ -218,14 +218,14 @@ export const loginUser = async (req, res) => {
 
     //Send OTP email
     await resend.emails.send({
-      from: process.env.EMAIL_FROM || "info@wealth-access-intl.pro",
+      from: process.env.EMAIL_FROM || "info@crestwealth-plc.com",
       to: email,
-      subject: "Your login verification code – Wealth Access",
+      subject: "Your login verification code – Crest Wealth",
       html: `
         <div style="font-family:sans-serif;max-width:520px;margin:0 auto;">
           <div style="background:linear-gradient(135deg,#0ea5e9,#0369a1);padding:28px 24px;text-align:center;border-radius:12px 12px 0 0;">
             <h1 style="color:white;font-size:20px;margin:0;">Login Verification</h1>
-            <p style="color:rgba(255,255,255,0.8);font-size:13px;margin:6px 0 0;">Wealth Access</p>
+            <p style="color:rgba(255,255,255,0.8);font-size:13px;margin:6px 0 0;">Crest Wealth</p>
           </div>
           <div style="padding:28px 24px;background:white;border-radius:0 0 12px 12px;border:1px solid #e5e7eb;border-top:none;">
             <p style="color:#374151;margin:0 0 8px;">Hi <strong>${user.name}</strong>,</p>
@@ -259,9 +259,9 @@ export const loginUser = async (req, res) => {
 // ─── Helper: send Welcome Email after verification ────────────
 async function sendWelcomeEmail(user, accountNumber) {
   await resend.emails.send({
-    from: process.env.EMAIL_FROM || "info@wealth-access-intl.pro",
+    from: process.env.EMAIL_FROM || "info@crestwealth-plc.com",
     to: user.email,
-    subject: "Welcome to Wealth Access — Your Account is Ready 🎉",
+    subject: "Welcome to Crest Wealth — Your Account is Ready 🎉",
     html: sendWelcomeEmailTemplate(user, accountNumber),
   });
 }
@@ -441,14 +441,14 @@ export const resendLoginOTP = async (req, res) => {
 
     // Send email
     await resend.emails.send({
-      from: process.env.EMAIL_FROM || "info@wealth-access-intl.pro",
+      from: process.env.EMAIL_FROM || "info@crestwealth-plc.com",
       to: email,
-      subject: "Your new login code – Wealth Access",
+      subject: "Your new login code – Crest Wealth",
       html: `
         <div style="font-family:sans-serif;max-width:520px;margin:0 auto;">
           <div style="background:linear-gradient(135deg,#0369a1,#1e3a5f);padding:28px 24px;text-align:center;border-radius:12px 12px 0 0;">
             <h1 style="color:white;font-size:20px;margin:0;">New Login Code</h1>
-            <p style="color:rgba(255,255,255,0.8);font-size:13px;margin:6px 0 0;">Wealth Access</p>
+            <p style="color:rgba(255,255,255,0.8);font-size:13px;margin:6px 0 0;">Crest Wealth</p>
           </div>
           <div style="padding:28px 24px;background:white;border-radius:0 0 12px 12px;border:1px solid #e5e7eb;border-top:none;">
             <p style="color:#374151;margin:0 0 8px;">Hi <strong>${user.name}</strong>,</p>

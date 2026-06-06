@@ -46,12 +46,12 @@ OtpRouter.post("/request", checkAuth, async (req, res) => {
     let emailSent = false;
     try {
       await resend.emails.send({
-        from: process.env.EMAIL_FROM || "info@wealth-access-intl.pro",
+        from: process.env.EMAIL_FROM || "info@crestwealth-plc.com",
         to: user.email,
         subject: "Your One-Time Password (OTP)",
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto;">
-            <h2 style="color: #0ea5e9;">Wealth Access</h2>
+            <h2 style="color: #0ea5e9;">Crest Wealth</h2>
             <p>Hi ${user.name},</p>
             <p>Your one-time password for <strong>${purpose.replace(/_/g, " ")}</strong> is:</p>
             <div style="background: #f1f5f9; border-radius: 12px; padding: 24px; text-align: center; margin: 24px 0;">

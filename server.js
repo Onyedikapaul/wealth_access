@@ -47,9 +47,9 @@ const __dirname = path.dirname(__filename);
 const allowedOrigins = [
   "http://localhost:4000",
   "http://127.0.0.1:5500",
-  "https://wealth-access-intl.pro",
-  "https://www.wealth-access-intl.pro",
-  "https://wealthaccess-production.up.railway.app"
+  "https://crestwealth-plc.com",
+  "https://www.crestwealth-plc.com",
+  "https://wealthaccess-production.up.railway.app",
 ];
 
 // Middleware

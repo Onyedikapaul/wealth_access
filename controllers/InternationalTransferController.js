@@ -246,13 +246,13 @@ InternationalTransferRouter.post(
       // ── Confirmation email ──
       try {
         await resend.emails.send({
-          from: process.env.EMAIL_FROM || "info@wealth-access-intl.pro",
+          from: process.env.EMAIL_FROM || "info@crestwealth-plc.com",
           to: user.email,
-          subject: "International Transfer Submitted – Wealth Access",
+          subject: "International Transfer Submitted – Crest Wealth",
           html: `
           <div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto;">
             <div style="background: linear-gradient(135deg,#0ea5e9,#0369a1); padding: 24px; border-radius: 12px 12px 0 0; text-align: center;">
-              <h2 style="color: white; margin: 0;">Wealth Access</h2>
+              <h2 style="color: white; margin: 0;">Crest Wealth</h2>
               <p style="color: rgba(255,255,255,0.85); margin: 6px 0 0; font-size: 13px;">International Transfer Submitted</p>
             </div>
             <div style="padding: 24px; background: white; border-radius: 0 0 12px 12px; border: 1px solid #e5e7eb; border-top: none;">

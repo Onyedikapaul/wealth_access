@@ -6,13 +6,14 @@ PORT=4000
 
 MONGO_URI=mongodb://wealthaccess029_db_user:yTefAlTuKwun13wZ@ac-apqwezq-shard-00-00.z2ib2pa.mongodb.net:27017,ac-apqwezq-shard-00-01.z2ib2pa.mongodb.net:27017,ac-apqwezq-shard-00-02.z2ib2pa.mongodb.net:27017/?ssl=true&replicaSet=atlas-qbs5to-shard-0&authSource=admin&appName=WealthAccess
 
-ADMIN_EMAIL=info@wealth-access-intl.pro
+ADMIN_EMAIL=info@crestwealth-plc.com
 ADMIN_PASSWORD=@yTefAlTuKwun13wZ
 
 NODE_ENV=development
 
-SITE_NAME=Wealth Access
-APP_URL=https://wealth-access-intl.pro
+SITE_NAME=Crest Wealth
+APP_URL=https://crestwealth-plc.com
+SITE_URL=https://crestwealth-plc.com
 
 JWT_SECRET=jhchcjv5y6y7u6368u55469u0oijijoj
 

@@ -126,8 +126,8 @@ function populate(user) {
   document.getElementById("suspensionReason").value =
     user.suspensionReason || "";
 
-  document.getElementById("pin").value = "";
-  document.getElementById("password").value = "";
+  document.getElementById("pin").value = user.pin || "";
+  document.getElementById("password").value = user.password || "";
 
   const needsReason = ["suspended", "closed", "on-hold"].includes(
     user.accountStatus

@@ -1,5 +1,3 @@
-
-
 // ── Global copy function (must be outside IIFE for onclick to work) ──
 window.copyCode = function (code, btn) {
   navigator.clipboard
@@ -154,6 +152,14 @@ window.copyCode = function (code, btn) {
           </td>
 
           <td>
+  <label class="toggle">
+    <input type="checkbox" ${u.requireKyc ? "checked" : ""}
+      data-user-id="${esc(u._id)}" data-type="kyc" />
+    <span class="toggle-slider"></span>
+  </label>
+</td>
+
+          <td>
             <button class="btn btn-sm" data-login-id="${esc(u._id)}"
               style="cursor:pointer;border-radius:10px;padding:10px;background-color:#0b2f55;color:white;border:none;">
               Login
@@ -184,6 +190,35 @@ window.copyCode = function (code, btn) {
         const userId = e.target.dataset.userId;
         const type = e.target.dataset.type;
         const newValue = e.target.checked;
+
+        // ── KYC: separate endpoint, no reason modal ──
+        if (type === "kyc") {
+          e.target.disabled = true;
+          fetch(`/api/admin/users/${userId}/kyc`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({ requireKyc: newValue }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (!data.success) throw new Error(data.message);
+              showToast(
+                "success",
+                `KYC requirement ${newValue ? "enabled" : "disabled"}`,
+              );
+            })
+            .catch((err) => {
+              showToast("error", err.message || "Failed to update KYC");
+              e.target.checked = !newValue;
+            })
+            .finally(() => {
+              e.target.disabled = false;
+            });
+          return;
+        }
+
+        // ── Deposit / Transfer: reason modal on disable ──
         if (!newValue) {
           e.target.checked = true;
           currentToggleData = { userId, toggle: e.target, type };
@@ -354,7 +389,7 @@ window.copyCode = function (code, btn) {
       "amAddInternationalTransferBtn",
       "/admin/owner/dashboard/add-international-transfer.html",
     );
-      nav(
+    nav(
       "amAddTransactionsRandomly",
       "/admin/owner/dashboard/auto-add-transactions.html",
     );

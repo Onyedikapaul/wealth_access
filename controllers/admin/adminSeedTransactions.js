@@ -665,12 +665,13 @@ function buildInternationalTransfer(userId, forcedType) {
       balanceType: "fiat",
       currency: "USD",
       details: {
-        accountName: recipient.name,
-        recipientName: recipient.name,
-        recipientCountry: recipient.country,
-        recipientAccount: randomAccountNumber(),
-        swiftCode: pick(US_BANKS).swift,
-        reference: randomReference(),
+        accountName: recipient.name, // ✅ already correct
+        accountNumber: randomAccountNumber(), // ❌ was "recipientAccount"
+        bankName: pick(US_BANKS).name, // ❌ was missing
+        country: recipient.country, // ❌ was "recipientCountry"
+        swiftCode: pick(US_BANKS).swift, // ✅ already correct
+        reference: randomReference(), // ✅ already correct
+        iban: `GB${randInt(10, 99)}NWBK${randomAccountNumber()}`, // ❌ was missing
       },
       description: `${pick(INTL_DESCRIPTIONS)} (${recipient.country})`,
       status: "successful",

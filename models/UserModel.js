@@ -132,6 +132,10 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    requireKyc: {
+      type: Boolean,
+      default: false,
+    },
     emailVerificationOTP: { type: String },
     emailVerificationExpires: { type: Date },
     passwordResetToken: { type: String },

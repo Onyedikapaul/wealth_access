@@ -790,9 +790,12 @@
                   </span>
                 </td>
                 <td class="px-4 py-3 text-sm text-gray-900 dark:text-white" x-text="intRecipient(t)"></td>
-                <td class="px-4 py-3 text-sm font-semibold text-red-600 dark:text-red-400">
-                  <span x-text="t.balanceType === 'btc' ? parseFloat(t.amount).toFixed(8) + ' BTC' : fmt(t.amount)"></span>
-                </td>
+                <td class="px-4 py-3 text-sm font-semibold" :class="t.type === 'credit' ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'">
+  <div class="flex items-center gap-1.5">
+    <i class="fa-solid text-xs" :class="t.type === 'credit' ? 'fa-arrow-down text-emerald-500' : 'fa-arrow-up text-red-500'"></i>
+    <span x-text="t.balanceType === 'btc' ? parseFloat(t.amount).toFixed(8) + ' BTC' : fmt(t.amount)"></span>
+  </div>
+</td>
                 <td class="px-4 py-3"><span class="inline-flex items-center px-2 py-1 text-xs font-medium rounded-lg" :class="statusClass(t.status)"><div class="w-1.5 h-1.5 rounded-full mr-1.5" :class="dotClass(t.status)"></div><span x-text="cap(t.status)"></span></span></td>
                 <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400"><div x-text="fmtDate(t.createdAt)"></div><div class="text-xs" x-text="fmtTime(t.createdAt)"></div></td>
                 <td class="px-4 py-3 text-right"><button @click="viewItem(t, 'international')" class="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-lg bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-800/50 transition-all"><i class="fa-solid fa-eye mr-1.5"></i> View</button></td>
@@ -814,7 +817,10 @@
               <div class="text-sm font-semibold text-gray-900 dark:text-white" x-text="t.method"></div>
               <div class="text-xs text-gray-500 dark:text-gray-400" x-text="intRecipient(t)"></div>
             </div>
-            <div class="text-sm font-bold text-red-500" x-text="t.balanceType === 'btc' ? parseFloat(t.amount).toFixed(8) + ' BTC' : fmt(t.amount)"></div>
+          <div class="flex items-center gap-1 text-sm font-bold" :class="t.type === 'credit' ? 'text-emerald-500' : 'text-red-500'">
+  <i class="fa-solid text-xs" :class="t.type === 'credit' ? 'fa-arrow-down' : 'fa-arrow-up'"></i>
+  <span x-text="t.balanceType === 'btc' ? parseFloat(t.amount).toFixed(8) + ' BTC' : fmt(t.amount)"></span>
+</div>
           </div>
           <div class="flex items-center justify-between">
             <span class="inline-flex items-center px-2 py-1 text-xs font-medium rounded-lg" :class="statusClass(t.status)"><div class="w-1.5 h-1.5 rounded-full mr-1.5" :class="dotClass(t.status)"></div><span x-text="cap(t.status)"></span></span>
@@ -907,6 +913,7 @@
   </div>
 
   <!-- ── VIEW MODAL ── -->
+  <!-- ── VIEW MODAL ── -->
   <div x-show="showModal" x-cloak @click.self="closeModal()" @keydown.escape.window="closeModal()"
        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
        x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
@@ -931,11 +938,24 @@
         <!-- Amount hero -->
         <div class="text-center mb-6 pb-6 border-b border-gray-100 dark:border-gray-700">
           <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-3"
-               :class="modalType === 'deposit' ? 'bg-emerald-100 dark:bg-emerald-900/30' : 'bg-red-100 dark:bg-red-900/30'">
-            <i class="fa-solid text-xl" :class="modalType === 'deposit' ? 'fa-arrow-down text-emerald-600 dark:text-emerald-400' : 'fa-arrow-up text-red-500 dark:text-red-400'"></i>
+               :class="modalType === 'deposit'
+                 ? 'bg-emerald-100 dark:bg-emerald-900/30'
+                 : modalData?.type === 'credit'
+                   ? 'bg-emerald-100 dark:bg-emerald-900/30'
+                   : 'bg-red-100 dark:bg-red-900/30'">
+            <i class="fa-solid text-xl"
+               :class="modalType === 'deposit'
+                 ? 'fa-arrow-down text-emerald-600 dark:text-emerald-400'
+                 : modalData?.type === 'credit'
+                   ? 'fa-arrow-down text-emerald-600 dark:text-emerald-400'
+                   : 'fa-arrow-up text-red-500 dark:text-red-400'"></i>
           </div>
           <div class="text-3xl font-bold mb-2"
-               :class="modalType === 'deposit' ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'">
+               :class="modalType === 'deposit'
+                 ? 'text-emerald-600 dark:text-emerald-400'
+                 : modalData?.type === 'credit'
+                   ? 'text-emerald-600 dark:text-emerald-400'
+                   : 'text-red-500 dark:text-red-400'">
             <template x-if="modalType === 'international' && modalData?.balanceType === 'btc'">
               <span x-text="parseFloat(modalData?.amount).toFixed(8) + ' BTC'"></span>
             </template>
@@ -968,7 +988,10 @@
         <template x-if="modalType === 'international'">
           <div class="space-y-3">
             <div class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700/50"><span class="text-sm text-gray-500 dark:text-gray-400">Method</span><span class="text-sm font-semibold text-gray-900 dark:text-white" x-text="modalData?.method"></span></div>
-            <div class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700/50"><span class="text-sm text-gray-500 dark:text-gray-400">Currency</span><span class="text-sm text-gray-900 dark:text-white" x-text="modalData?.currency || 'USD'"></span></div>
+            <div class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700/50">
+              <span class="text-sm text-gray-500 dark:text-gray-400">Currency</span>
+              <span class="text-sm text-gray-900 dark:text-white" x-text="window._userProfile?.currency?.code || modalData?.currency || 'USD'"></span>
+            </div>
 
             <!-- Wire Transfer details -->
             <template x-if="modalData?.method === 'Wire Transfer'">
@@ -1013,14 +1036,14 @@
         <template x-if="modalType === 'deposit'">
           <div class="space-y-3">
             <div class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700/50"><span class="text-sm text-gray-500 dark:text-gray-400">Transaction ID</span><span class="text-sm font-mono font-semibold text-gray-900 dark:text-white" x-text="modalData?.transactionId"></span></div>
-           <div class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700/50">
-  <span class="text-sm text-gray-500 dark:text-gray-400">Coin / Method</span>
-  <span class="text-sm font-medium text-gray-900 dark:text-white" x-text="modalData?.paymentMethod || '—'"></span>
-</div>
-<div class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700/50">
-  <span class="text-sm text-gray-500 dark:text-gray-400">Wallet Address</span>
-  <span class="text-xs font-mono text-gray-700 dark:text-gray-300 text-right max-w-xs break-all" x-text="modalData?.walletAddress || '—'"></span>
-</div>
+            <div class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700/50">
+              <span class="text-sm text-gray-500 dark:text-gray-400">Coin / Method</span>
+              <span class="text-sm font-medium text-gray-900 dark:text-white" x-text="modalData?.paymentMethod || '—'"></span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700/50">
+              <span class="text-sm text-gray-500 dark:text-gray-400">Wallet Address</span>
+              <span class="text-xs font-mono text-gray-700 dark:text-gray-300 text-right max-w-xs break-all" x-text="modalData?.walletAddress || '—'"></span>
+            </div>
             <div x-show="modalData?.approvedAt" class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700/50"><span class="text-sm text-gray-500 dark:text-gray-400">Approved At</span><span class="text-sm text-gray-900 dark:text-white" x-text="fmtDate(modalData?.approvedAt) + ' ' + fmtTime(modalData?.approvedAt)"></span></div>
             <div x-show="modalData?.rejectedAt" class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700/50"><span class="text-sm text-gray-500 dark:text-gray-400">Rejected At</span><span class="text-sm text-gray-900 dark:text-white" x-text="fmtDate(modalData?.rejectedAt)"></span></div>
             <div x-show="modalData?.rejectionReason" class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700/50"><span class="text-sm text-gray-500 dark:text-gray-400">Rejection Reason</span><span class="text-sm text-red-500 text-right max-w-xs" x-text="modalData?.rejectionReason"></span></div>

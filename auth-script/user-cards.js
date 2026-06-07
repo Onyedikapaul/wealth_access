@@ -65,7 +65,7 @@
       shine: "rgba(255,255,255,0.06)",
       accent: "#e2e8f0",
     },
-    // default fallback
+    // default fallback 
     default: {
       gradient:
         "linear-gradient(135deg, #1a56db 0%, #1e40af 50%, #1e3a8a 100%)",

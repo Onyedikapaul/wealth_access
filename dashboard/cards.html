@@ -657,40 +657,39 @@
             };
             return gradients[colorScheme] || gradients['blue'];
         },
-        async submitCardApplication() {
-    this.submittingApplication = true;
-    try {
-        const response = await fetch('/api/cards', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-            body: JSON.stringify(this.applicationForm)
-        });
-        const data = await response.json();
+       async submitCardApplication() {
+  this.submittingApplication = true;
+  try {
+    const response = await fetch('/api/cards', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(this.applicationForm)
+    });
+    const data = await response.json();
 
-        if (data.success) {
-            this.showCardApplicationModal = false;
-            this.loadCards();
-            this.applicationForm = {
-                card_type: 'virtual',
-                card_tier: 'platinum',
-                card_brand: 'visa',
-                color_scheme: 'blue',
-                daily_limit: 1000,
-                currency: 'USD'
-            };
-            // nice toast instead of alert - uses your existing showNotification if available
-            if (typeof showNotification === 'function') {
-                showNotification('Card application submitted! Your card is being processed.', 'success');
-            }
-        } else {
-            console.error(data.message);
-        }
-    } catch (error) {
-        console.error('Error submitting application:', error);
-    } finally {
-        this.submittingApplication = false;
+    if (data.success) {
+      this.showCardApplicationModal = false;
+      this.loadCards();
+      this.applicationForm = {
+        card_type: 'virtual',
+        card_tier: 'platinum',
+        card_brand: 'visa',
+        color_scheme: 'blue',
+        daily_limit: 1000,
+        currency: 'USD'
+      };
+      showToast('Card application submitted successfully!', 'success');
+    } else {
+      // ✅ Now shows the actual error message
+      showToast(data.message || 'Something went wrong. Please try again.', 'error');
     }
+  } catch (error) {
+    console.error('Error submitting application:', error);
+    showToast('Network error. Please check your connection.', 'error');
+  } finally {
+    this.submittingApplication = false;
+  }
 },
         initDarkMode() {
             if (this.darkMode) {
@@ -1013,7 +1012,7 @@
                             </div>
                             
                             <div class="lg:hidden">
-                                <a href="apply.html" class="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white rounded-xl font-semibold transition-all duration-300 border border-white/30">
+                                <a @click="showCardApplicationModal = true" class="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white rounded-xl font-semibold transition-all duration-300 border border-white/30">
                                     <i class="fas fa-plus mr-2"></i> Apply Now
                                 </a>
                             </div>
@@ -1781,6 +1780,17 @@ checkAuth();
  <script src="/js-scripts/notifications.js"></script>
   <script src="/js-scripts/includeHeader.js"></script>
 
+  <script>
+     function showToast(message, type = 'success') {
+  const toast = document.createElement('div');
+  toast.className = `fixed top-4 right-4 z-[9999] px-5 py-3 rounded-xl shadow-lg text-white text-sm font-semibold transition-all duration-300 ${
+    type === 'success' ? 'bg-emerald-500' : 'bg-red-500'
+  }`;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 4000);
+}
+  </script>
 
   <!-- New -->
    <script src="/auth-script/user-ui.js"></script>

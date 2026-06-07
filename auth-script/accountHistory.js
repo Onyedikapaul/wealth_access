@@ -307,7 +307,7 @@ function transactionApp() {
       doc.setFontSize(18);
       doc.setFont("helvetica", "bold");
       doc.setTextColor(239, 68, 68);
-
+ 
       const amountDisplay =
         isInternational && d.balanceType === "btc"
           ? `${parseFloat(d.amount).toFixed(8)} BTC`

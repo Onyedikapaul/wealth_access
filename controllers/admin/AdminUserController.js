@@ -6,11 +6,13 @@ import UserModel from "../../models/UserModel.js";
 export const getAllUsers = async (req, res) => {
   try {
     const users = await UserModel.find({})
-      .select("name email isAllowedToDeposit isAllowedToTransfer blockedDepositReason blockedTransferReason accountStatus otp_code otp_purpose otp_expires_at createdAt")
+      .select(
+        "name email isAllowedToDeposit isAllowedToTransfer blockedDepositReason blockedTransferReason accountStatus otp_code otp_purpose otp_expires_at requireKyc  createdAt",
+      )
       .sort({ createdAt: -1 })
       .lean();
 
-      // console.log(users)
+    // console.log(users)
 
     return res.json(users);
   } catch (err) {
@@ -48,6 +50,38 @@ export const updateUserPermission = async (req, res) => {
   }
 };
 
+export const updateUserKyc = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { requireKyc } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid user id" });
+    }
+
+    if (typeof requireKyc !== "boolean") {
+      return res.status(400).json({ message: "requireKyc must be a boolean" });
+    }
+
+    const user = await UserModel.findByIdAndUpdate(
+      id,
+      { requireKyc },
+      { returnDocument: "after" },
+    );
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    return res.json({
+      success: true,
+      message: `KYC requirement ${requireKyc ? "enabled" : "disabled"}`,
+      requireKyc: user.requireKyc,
+    });
+  } catch (err) {
+    console.error("updateUserKyc error:", err);
+    return res.status(500).json({ message: err.message });
+  }
+};
+
 export const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -56,7 +90,7 @@ export const getUserById = async (req, res) => {
     }
 
     const user = await UserModel.findById(id)
-      .select("-password -securityPin -emailVerifyCodeHash")
+      .select("-securityPin -emailVerifyCodeHash")
       .lean();
 
     if (!user) return res.status(404).json({ message: "User not found" });
@@ -123,7 +157,11 @@ export const updateUser = async (req, res) => {
     const updates = { ...req.body };
 
     // Block suspend/close without a reason
-    if (updates.status === "suspended" || updates.status === "closed" || updates.status === "on-hold") {
+    if (
+      updates.status === "suspended" ||
+      updates.status === "closed" ||
+      updates.status === "on-hold"
+    ) {
       if (!updates.suspensionReason || !updates.suspensionReason.trim()) {
         return res.status(400).json({
           success: false,

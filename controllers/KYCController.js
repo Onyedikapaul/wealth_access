@@ -4,6 +4,7 @@ import checkAuth from "../middleware/authMiddleware.js";
 import Kyc from "../models/KYCModel.js";
 import cloudinary from "../config/cloudinary.js";
 import resend from "../lib/resend.js";
+import UserModel from "../models/UserModel.js";
 
 const KYCRouter = express.Router();
 
@@ -506,6 +507,14 @@ KYCRouter.patch("/admin/:id/reject", async (req, res) => {
 
 export const requireKYC = async (req, res, next) => {
   try {
+    const user = await UserModel.findById(req.user._id).select("requireKyc");
+
+    // If admin hasn't flagged this user, skip entirely
+    if (!user.requireKyc) {
+      return next();
+    }
+
+    // requireKyc is true — now check if they're approved
     const kyc = await Kyc.findOne({ user: req.user._id });
 
     if (!kyc || kyc.status !== "approved") {

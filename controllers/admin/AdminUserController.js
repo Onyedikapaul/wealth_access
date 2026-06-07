@@ -175,11 +175,6 @@ export const updateUser = async (req, res) => {
       updates.suspensionReason = null;
     }
 
-    // Hash password if provided
-    if (updates.password) {
-      updates.password = await bcrypt.hash(updates.password, 10);
-    }
-
     const user = await UserModel.findByIdAndUpdate(id, updates, {
       returnDocument: "after",
     }).select("-password");

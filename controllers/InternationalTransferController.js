@@ -53,6 +53,7 @@ InternationalTransferRouter.post(
         alipayFullName,
         wechatId,
         wechatName,
+        receiver_email,
       } = req.body;
 
       const isCrypto =
@@ -245,11 +246,75 @@ InternationalTransferRouter.post(
 
       // ── Confirmation email ──
       try {
-        await resend.emails.send({
-          from: process.env.EMAIL_FROM || "info@crestwealth-plc.com",
-          to: user.email,
-          subject: `International Transfer Submitted – Crest Wealth`,
-          html: `
+        const amountDisplay = isCrypto
+          ? parsedAmount.toFixed(8) + " BTC"
+          : "$" +
+            parsedAmount.toLocaleString("en-US", { minimumFractionDigits: 2 });
+
+        const senderDetails = [
+          ["Transfer Method", withdrawMethod],
+          ["Sender Name", user.name],
+          [
+            "Beneficiary Name",
+            transferDetails.accountName ||
+              transferDetails.fullName ||
+              transferDetails.paypalEmail ||
+              transferDetails.cashtag ||
+              transferDetails.wechatId ||
+              transferDetails.alipayId ||
+              "—",
+          ],
+          [
+            "Beneficiary Account",
+            transferDetails.accountNumber ||
+              transferDetails.walletAddress ||
+              transferDetails.email ||
+              transferDetails.phone ||
+              transferDetails.username ||
+              "—",
+          ],
+          ["Amount", amountDisplay],
+          ["Currency", isCrypto ? "BTC" : "USD"],
+          ...(transferDetails.bankName
+            ? [["Bank Name", transferDetails.bankName]]
+            : []),
+          ...(transferDetails.swiftCode
+            ? [["SWIFT Code", transferDetails.swiftCode]]
+            : []),
+          ...(transferDetails.iban ? [["IBAN", transferDetails.iban]] : []),
+          ...(transferDetails.country
+            ? [["Country", transferDetails.country]]
+            : []),
+          ["Description", Description || "—"],
+          [
+            "Transaction Date",
+            new Date().toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            }),
+          ],
+          ["Status", "Successful"],
+        ];
+
+        const receiverDetails = [
+          ["Reference", transfer._id.toString()],
+          ["Sender Name", user.name],
+          ["Sender Email", user.email],
+          ["Amount Received", amountDisplay],
+          ["Description", Description || "—"],
+          [
+            "Transaction Date",
+            new Date().toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            }),
+          ],
+          ["Status", "Successful"],
+        ];
+
+        const buildEmailHtml = (heading, subheading, greeting, details) => `
   <!DOCTYPE html>
   <html>
   <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
@@ -257,94 +322,26 @@ InternationalTransferRouter.post(
     <table width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f9;padding:32px 16px;">
       <tr><td align="center">
         <table width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.10);">
-
-          <!-- Header -->
           <tr>
             <td style="background:linear-gradient(135deg,#0ea5e9,#0369a1);padding:36px 24px;text-align:center;">
               <div style="background:rgba(0,0,0,0.25);display:inline-block;padding:10px 28px;border-radius:10px;margin-bottom:16px;">
                 <span style="color:#fff;font-size:22px;font-weight:900;letter-spacing:1px;">Crest Wealth</span>
               </div>
               <div style="font-size:40px;margin-bottom:8px;">💸</div>
-              <h1 style="color:#fff;margin:0;font-size:24px;font-weight:900;">Transfer Submitted</h1>
-              <p style="color:rgba(255,255,255,0.85);margin:8px 0 0;font-size:14px;">Your international transfer has been received</p>
+              <h1 style="color:#fff;margin:0;font-size:24px;font-weight:900;">${heading}</h1>
+              <p style="color:rgba(255,255,255,0.85);margin:8px 0 0;font-size:14px;">${subheading}</p>
             </td>
           </tr>
-
-          <!-- Body -->
           <tr>
             <td style="background:#ffffff;padding:32px 28px;">
-
-              <p style="margin:0 0 20px;font-size:16px;color:#0f172a;">Hello, <strong>${user.name}</strong> 👋</p>
-              <p style="margin:0 0 24px;font-size:14px;color:#64748b;line-height:1.6;">
-                This is to inform you that your international transfer request has been submitted successfully and is currently being processed.
-              </p>
-
-              <!-- Amount block -->
+              <p style="margin:0 0 20px;font-size:16px;color:#0f172a;">${greeting} 👋</p>
               <div style="background:#f0f9ff;border:2px solid #bae6fd;border-radius:12px;padding:20px;text-align:center;margin-bottom:24px;">
                 <p style="margin:0 0 4px;font-size:12px;color:#0369a1;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;">Transfer Amount</p>
-                <p style="margin:0;font-size:32px;font-weight:900;color:#0ea5e9;">
-                  ${isCrypto ? parsedAmount.toFixed(8) + " BTC" : "$" + parsedAmount.toLocaleString("en-US", { minimumFractionDigits: 2 })}
-                </p>
+                <p style="margin:0;font-size:32px;font-weight:900;color:#0ea5e9;">${amountDisplay}</p>
               </div>
-
-              <!-- Details table -->
               <p style="margin:0 0 12px;font-size:13px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.06em;">Transfer Details</p>
               <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;margin-bottom:24px;">
-                ${[
-                  ["Transfer Method", withdrawMethod],
-                  ["Sender Name", user.name],
-                  [
-                    "Beneficiary Name",
-                    transferDetails.accountName ||
-                      transferDetails.fullName ||
-                      transferDetails.paypalEmail ||
-                      transferDetails.cashtag ||
-                      transferDetails.wechatId ||
-                      transferDetails.alipayId ||
-                      "—",
-                  ],
-                  [
-                    "Beneficiary Account",
-                    transferDetails.accountNumber ||
-                      transferDetails.walletAddress ||
-                      transferDetails.email ||
-                      transferDetails.phone ||
-                      transferDetails.username ||
-                      "—",
-                  ],
-                  [
-                    "Amount",
-                    isCrypto
-                      ? parsedAmount.toFixed(8) + " BTC"
-                      : "$" +
-                        parsedAmount.toLocaleString("en-US", {
-                          minimumFractionDigits: 2,
-                        }),
-                  ],
-                  ["Currency", isCrypto ? "BTC" : "USD"],
-                  ...(transferDetails.bankName
-                    ? [["Bank Name", transferDetails.bankName]]
-                    : []),
-                  ...(transferDetails.swiftCode
-                    ? [["SWIFT Code", transferDetails.swiftCode]]
-                    : []),
-                  ...(transferDetails.iban
-                    ? [["IBAN", transferDetails.iban]]
-                    : []),
-                  ...(transferDetails.country
-                    ? [["Country", transferDetails.country]]
-                    : []),
-                  ["Description", transfer.description || "—"],
-                  [
-                    "Transaction Date",
-                    new Date().toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    }),
-                  ],
-                  ["Status", "Pending Review"],
-                ]
+                ${details
                   .map(
                     ([label, value], i) => `
                   <tr style="background:${i % 2 === 0 ? "#f8fafc" : "#ffffff"};">
@@ -355,34 +352,54 @@ InternationalTransferRouter.post(
                   )
                   .join("")}
               </table>
-
-              <!-- Note -->
               <div style="background:#fef3c7;border-left:4px solid #f59e0b;border-radius:6px;padding:14px 16px;margin-bottom:24px;">
                 <p style="margin:0;font-size:13px;color:#92400e;line-height:1.5;">
                   <strong>NOTE:</strong> International transfers take up to 2–3 working days to reflect in the beneficiary's account.
                 </p>
               </div>
-
-              <p style="margin:0;font-size:14px;color:#64748b;">If you did not initiate this transfer, please contact support immediately.</p>
+              <p style="margin:0;font-size:14px;color:#64748b;">If you have any questions, please contact support immediately.</p>
               <p style="margin:16px 0 0;font-size:14px;color:#0f172a;font-weight:700;">Cheers,<br>The Crest Wealth Team</p>
             </td>
           </tr>
-
-          <!-- Footer -->
           <tr>
             <td style="background:#0f172a;padding:20px 24px;text-align:center;">
               <p style="margin:0;font-size:12px;color:rgba(255,255,255,0.5);">© Crest Wealth – A fresh approach to banking!</p>
               <p style="margin:6px 0 0;font-size:11px;color:rgba(255,255,255,0.3);">This is an automated message, please do not reply.</p>
             </td>
           </tr>
-
         </table>
       </td></tr>
     </table>
   </body>
-  </html>
-  `,
+  </html>`;
+
+        // ── Send to sender ──
+        await resend.emails.send({
+          from: process.env.EMAIL_FROM || "info@crestwealth-plc.com",
+          to: user.email,
+          subject: `International Transfer Submitted – Crest Wealth`,
+          html: buildEmailHtml(
+            "Transfer Submitted",
+            "Your international transfer has been received",
+            `Hello, <strong>${user.name}</strong>`,
+            senderDetails,
+          ),
         });
+
+        // ── Send to receiver if email provided ──
+        if (receiver_email && receiver_email.trim()) {
+          await resend.emails.send({
+            from: process.env.EMAIL_FROM || "info@crestwealth-plc.com",
+            to: receiver_email.trim(),
+            subject: `You Have Received an International Transfer – Crest Wealth`,
+            html: buildEmailHtml(
+              "You've Received Money 💸",
+              "An international transfer has been sent to you",
+              `Hello, <strong>${transferDetails.accountName || transferDetails.fullName || "there"}</strong>`,
+              receiverDetails,
+            ),
+          });
+        }
       } catch (emailErr) {
         console.error("[InternationalTransfer] Email error:", emailErr.message);
       }

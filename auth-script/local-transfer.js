@@ -278,6 +278,7 @@ async function submitTransfer(alpineData, processingModal) {
       Description: alpineData.Description,
       pin: alpineData.pin,
       otp_code: alpineData.otp_code,
+      receiver_email: alpineData.receiver_email,
     };
 
     const res = await fetch("/api/transfer/local", {
@@ -320,6 +321,7 @@ async function submitTransfer(alpineData, processingModal) {
         alpineFormData.swift_code = "";
         alpineFormData.pin = "";
         alpineFormData.otp_code = "";
+        alpineFormData.receiver_email = "";
         alpineFormData.Description = "";
       }
 
@@ -551,7 +553,7 @@ function downloadTransferReceiptPdf(txn) {
     ["Description", txn.description || "—"],
     ["Status", cap(txn.status)],
     ["Date", fmtDate(txn.createdAt) + " " + fmtTime(txn.createdAt)],
-  ];
+  ]; 
 
   let y = 70;
   doc.setFontSize(10);

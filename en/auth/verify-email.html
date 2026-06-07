@@ -200,8 +200,8 @@
           verifyBtnTxt: "Verify Email",
           successTitle: "Email Verified!",
           successMsg: "Your account is now active. Redirecting to login...",
-          backLink: `Wrong email? <a href="/register.html">Back to registration</a>`,
-          onSuccess: (_data) => { startRedirect(() => { window.location.href = "/login.html"; }); },
+          backLink: `Wrong email? <a href="/en/auth/register.html">Back to registration</a>`,
+          onSuccess: (_data) => { startRedirect(() => { window.location.href = "/en/auth/login.html"; }); },
         },
         login: {
           VERIFY_URL: "/api/verify-login-otp",
@@ -214,7 +214,7 @@
           verifyBtnTxt: "Verify & Sign In",
           successTitle: "Login Successful!",
           successMsg: "Identity confirmed. Taking you to your dashboard...",
-          backLink: `Wrong account? <a href="/login">Back to login</a>`,
+          backLink: `Wrong account? <a href="/en/auth/login.html">Back to login</a>`,
           onSuccess: (_data) => { startRedirect(() => { window.location.href = "/dashboard"; }); },
         },
         forgot: {
@@ -228,12 +228,12 @@
           verifyBtnTxt: "Verify & Reset",
           successTitle: "Code Verified!",
           successMsg: "Redirecting you to set a new password...",
-          backLink: `Remembered it? <a href="/login">Back to login</a>`,
+          backLink: `Remembered it? <a href="/en/auth/login.html">Back to login</a>`,
           onSuccess: (data) => {
             sessionStorage.setItem("resetToken", data.token);
             sessionStorage.setItem("resetEmail", data.email || email);
             startRedirect(() => {
-              window.location.href = `/auth/reset-password?email=${encodeURIComponent(data.email || email)}&token=${encodeURIComponent(data.token)}`;
+              window.location.href = `/en/auth/reset-password?email=${encodeURIComponent(data.email || email)}&token=${encodeURIComponent(data.token)}`;
             });
           },
         },

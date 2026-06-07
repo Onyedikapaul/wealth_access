@@ -693,6 +693,7 @@
           pin: '',
           otp_code: '',
           Description: '',
+          receiver_email: '',
           isSubmitting: false,
           showPreview: false,
 
@@ -1151,6 +1152,16 @@ function quickTransfer() {
                         <input type="text" name="accountnumber" id="accountnumber" x-model="accountnumber" class="block w-full pl-10 pr-3 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-lg bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 text-sm" placeholder="Enter account number" required/>
                       </div>
                     </div>
+
+                    <div class="space-y-2">
+  <label for="receiver_email" class="block text-xs font-semibold text-gray-700 dark:text-gray-300">Receiver Email <span class="text-gray-400 font-normal">(optional)</span></label>
+  <div class="relative">
+    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10"><i class="fas fa-envelope text-gray-400 dark:text-gray-500"></i></div>
+    <input type="email" name="receiver_email" id="receiver_email" x-model="receiver_email"
+      class="block w-full pl-10 pr-3 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-lg bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 text-sm"
+      placeholder="Enter receiver's email address"/>
+  </div>
+</div>
                   </div>
                   <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div class="space-y-2">
@@ -1360,6 +1371,10 @@ function quickTransfer() {
                       <span class="text-gray-600 dark:text-gray-400 font-medium">Account Number</span>
                       <span class="font-semibold text-gray-900 dark:text-white font-mono" x-text="accountnumber"></span>
                     </div>
+                   <div class="flex justify-between items-center" x-show="receiver_email && receiver_email.trim() !== ''">
+  <span class="text-gray-600 dark:text-gray-400 font-medium">Receiver Email</span>
+  <span class="font-semibold text-gray-900 dark:text-white" x-text="receiver_email"></span>
+</div>
                     <div class="flex justify-between items-center">
                       <span class="text-gray-600 dark:text-gray-400 font-medium">Bank</span>
                       <span class="font-semibold text-gray-900 dark:text-white" x-text="bankname"></span>
@@ -1417,6 +1432,7 @@ function quickTransfer() {
                     <input type="hidden" name="swift_code" :value="swift_code">
                     <input type="hidden" name="Description" :value="Description">
                     <input type="hidden" name="pin" :value="pin">
+                    <input type="hidden" name="receiver_email" :value="receiver_email">
                     <input type="hidden" name="otp_code" :value="otp_code">
                     <input type="hidden" name="balance_type" value="fiat">
                     <button type="button" id="confirmTransferBtn" class="w-full inline-flex justify-center items-center px-6 py-3 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]">

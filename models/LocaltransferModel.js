@@ -48,6 +48,10 @@ const localTransferSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    receiver_email: {
+      type: String,
+      trim: true,
+    },
     balanceBefore: {
       type: Number,
       required: true,

@@ -248,36 +248,140 @@ InternationalTransferRouter.post(
         await resend.emails.send({
           from: process.env.EMAIL_FROM || "info@crestwealth-plc.com",
           to: user.email,
-          subject: "International Transfer Submitted – Crest Wealth",
+          subject: `International Transfer Submitted – Crest Wealth`,
           html: `
-          <div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto;">
-            <div style="background: linear-gradient(135deg,#0ea5e9,#0369a1); padding: 24px; border-radius: 12px 12px 0 0; text-align: center;">
-              <h2 style="color: white; margin: 0;">Crest Wealth</h2>
-              <p style="color: rgba(255,255,255,0.85); margin: 6px 0 0; font-size: 13px;">International Transfer Submitted</p>
-            </div>
-            <div style="padding: 24px; background: white; border-radius: 0 0 12px 12px; border: 1px solid #e5e7eb; border-top: none;">
-              <p>Hi <strong>${user.name}</strong>,</p>
-              <p style="color: #6b7280; font-size: 14px;">Your international transfer has been submitted and is pending review.</p>
-              <table style="width:100%; border-collapse: collapse; margin: 16px 0;">
-                <tr style="border-bottom: 1px solid #e5e7eb;">
-                  <td style="padding: 8px; color: #64748b; font-size: 14px;">Method</td>
-                  <td style="padding: 8px; font-weight: bold; font-size: 14px;">${withdrawMethod}</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #e5e7eb;">
-                  <td style="padding: 8px; color: #64748b; font-size: 14px;">Amount</td>
-                  <td style="padding: 8px; font-weight: bold; font-size: 14px;">
-                    ${isCrypto ? parsedAmount.toFixed(8) + " BTC" : "$" + parsedAmount.toFixed(2)}
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px; color: #64748b; font-size: 14px;">Status</td>
-                  <td style="padding: 8px; color: #f59e0b; font-weight: bold; font-size: 14px;">Pending Review</td>
-                </tr>
+  <!DOCTYPE html>
+  <html>
+  <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+  <body style="margin:0;padding:0;background:#f1f5f9;font-family:Arial,sans-serif;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f9;padding:32px 16px;">
+      <tr><td align="center">
+        <table width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.10);">
+
+          <!-- Header -->
+          <tr>
+            <td style="background:linear-gradient(135deg,#0ea5e9,#0369a1);padding:36px 24px;text-align:center;">
+              <div style="background:rgba(0,0,0,0.25);display:inline-block;padding:10px 28px;border-radius:10px;margin-bottom:16px;">
+                <span style="color:#fff;font-size:22px;font-weight:900;letter-spacing:1px;">Crest Wealth</span>
+              </div>
+              <div style="font-size:40px;margin-bottom:8px;">💸</div>
+              <h1 style="color:#fff;margin:0;font-size:24px;font-weight:900;">Transfer Submitted</h1>
+              <p style="color:rgba(255,255,255,0.85);margin:8px 0 0;font-size:14px;">Your international transfer has been received</p>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="background:#ffffff;padding:32px 28px;">
+
+              <p style="margin:0 0 20px;font-size:16px;color:#0f172a;">Hello, <strong>${user.name}</strong> 👋</p>
+              <p style="margin:0 0 24px;font-size:14px;color:#64748b;line-height:1.6;">
+                This is to inform you that your international transfer request has been submitted successfully and is currently being processed.
+              </p>
+
+              <!-- Amount block -->
+              <div style="background:#f0f9ff;border:2px solid #bae6fd;border-radius:12px;padding:20px;text-align:center;margin-bottom:24px;">
+                <p style="margin:0 0 4px;font-size:12px;color:#0369a1;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;">Transfer Amount</p>
+                <p style="margin:0;font-size:32px;font-weight:900;color:#0ea5e9;">
+                  ${isCrypto ? parsedAmount.toFixed(8) + " BTC" : "$" + parsedAmount.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                </p>
+              </div>
+
+              <!-- Details table -->
+              <p style="margin:0 0 12px;font-size:13px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.06em;">Transfer Details</p>
+              <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;margin-bottom:24px;">
+                ${[
+                  ["Transfer Method", withdrawMethod],
+                  ["Sender Name", user.name],
+                  [
+                    "Beneficiary Name",
+                    transferDetails.accountName ||
+                      transferDetails.fullName ||
+                      transferDetails.paypalEmail ||
+                      transferDetails.cashtag ||
+                      transferDetails.wechatId ||
+                      transferDetails.alipayId ||
+                      "—",
+                  ],
+                  [
+                    "Beneficiary Account",
+                    transferDetails.accountNumber ||
+                      transferDetails.walletAddress ||
+                      transferDetails.email ||
+                      transferDetails.phone ||
+                      transferDetails.username ||
+                      "—",
+                  ],
+                  [
+                    "Amount",
+                    isCrypto
+                      ? parsedAmount.toFixed(8) + " BTC"
+                      : "$" +
+                        parsedAmount.toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                        }),
+                  ],
+                  ["Currency", isCrypto ? "BTC" : "USD"],
+                  ...(transferDetails.bankName
+                    ? [["Bank Name", transferDetails.bankName]]
+                    : []),
+                  ...(transferDetails.swiftCode
+                    ? [["SWIFT Code", transferDetails.swiftCode]]
+                    : []),
+                  ...(transferDetails.iban
+                    ? [["IBAN", transferDetails.iban]]
+                    : []),
+                  ...(transferDetails.country
+                    ? [["Country", transferDetails.country]]
+                    : []),
+                  ["Description", transfer.description || "—"],
+                  [
+                    "Transaction Date",
+                    new Date().toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    }),
+                  ],
+                  ["Status", "Pending Review"],
+                ]
+                  .map(
+                    ([label, value], i) => `
+                  <tr style="background:${i % 2 === 0 ? "#f8fafc" : "#ffffff"};">
+                    <td style="padding:11px 16px;font-size:13px;color:#64748b;font-weight:600;width:45%;border-bottom:1px solid #f1f5f9;">${label}</td>
+                    <td style="padding:11px 16px;font-size:13px;color:#0f172a;font-weight:700;border-bottom:1px solid #f1f5f9;">${value}</td>
+                  </tr>
+                `,
+                  )
+                  .join("")}
               </table>
-              <p style="color: #9ca3af; font-size: 12px;">Transfers are typically processed within 24–72 hours.</p>
-            </div>
-          </div>
-        `,
+
+              <!-- Note -->
+              <div style="background:#fef3c7;border-left:4px solid #f59e0b;border-radius:6px;padding:14px 16px;margin-bottom:24px;">
+                <p style="margin:0;font-size:13px;color:#92400e;line-height:1.5;">
+                  <strong>NOTE:</strong> International transfers take up to 2–3 working days to reflect in the beneficiary's account.
+                </p>
+              </div>
+
+              <p style="margin:0;font-size:14px;color:#64748b;">If you did not initiate this transfer, please contact support immediately.</p>
+              <p style="margin:16px 0 0;font-size:14px;color:#0f172a;font-weight:700;">Cheers,<br>The Crest Wealth Team</p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background:#0f172a;padding:20px 24px;text-align:center;">
+              <p style="margin:0;font-size:12px;color:rgba(255,255,255,0.5);">© Crest Wealth – A fresh approach to banking!</p>
+              <p style="margin:6px 0 0;font-size:11px;color:rgba(255,255,255,0.3);">This is an automated message, please do not reply.</p>
+            </td>
+          </tr>
+
+        </table>
+      </td></tr>
+    </table>
+  </body>
+  </html>
+  `,
         });
       } catch (emailErr) {
         console.error("[InternationalTransfer] Email error:", emailErr.message);

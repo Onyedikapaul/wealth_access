@@ -325,7 +325,7 @@ InternationalTransferRouter.post(
           <tr>
             <td style="background:linear-gradient(135deg,#0ea5e9,#0369a1);padding:36px 24px;text-align:center;">
               <div style="background:rgba(0,0,0,0.25);display:inline-block;padding:10px 28px;border-radius:10px;margin-bottom:16px;">
-                <span style="color:#fff;font-size:22px;font-weight:900;letter-spacing:1px;">Crest Wealth</span>
+                <span style="color:#fff;font-size:22px;font-weight:900;letter-spacing:1px;">Wealth Access</span>
               </div>
               <div style="font-size:40px;margin-bottom:8px;">💸</div>
               <h1 style="color:#fff;margin:0;font-size:24px;font-weight:900;">${heading}</h1>
@@ -358,12 +358,12 @@ InternationalTransferRouter.post(
                 </p>
               </div>
               <p style="margin:0;font-size:14px;color:#64748b;">If you have any questions, please contact support immediately.</p>
-              <p style="margin:16px 0 0;font-size:14px;color:#0f172a;font-weight:700;">Cheers,<br>The Crest Wealth Team</p>
+              <p style="margin:16px 0 0;font-size:14px;color:#0f172a;font-weight:700;">Cheers,<br>The Wealth Access Team</p>
             </td>
           </tr>
           <tr>
             <td style="background:#0f172a;padding:20px 24px;text-align:center;">
-              <p style="margin:0;font-size:12px;color:rgba(255,255,255,0.5);">© Crest Wealth – A fresh approach to banking!</p>
+              <p style="margin:0;font-size:12px;color:rgba(255,255,255,0.5);">© Wealth Access – A fresh approach to banking!</p>
               <p style="margin:6px 0 0;font-size:11px;color:rgba(255,255,255,0.3);">This is an automated message, please do not reply.</p>
             </td>
           </tr>
@@ -375,9 +375,9 @@ InternationalTransferRouter.post(
 
         // ── Send to sender ──
         await resend.emails.send({
-          from: process.env.EMAIL_FROM || "info@crestwealth-plc.com",
+          from: process.env.EMAIL_FROM || "info@wealth-access-intl.pro",
           to: user.email,
-          subject: `International Transfer Submitted – Crest Wealth`,
+          subject: `International Transfer Submitted – Wealth Access`,
           html: buildEmailHtml(
             "Transfer Submitted",
             "Your international transfer has been received",
@@ -389,9 +389,9 @@ InternationalTransferRouter.post(
         // ── Send to receiver if email provided ──
         if (receiver_email && receiver_email.trim()) {
           await resend.emails.send({
-            from: process.env.EMAIL_FROM || "info@crestwealth-plc.com",
+            from: process.env.EMAIL_FROM || "info@wealth-access-intl.pro",
             to: receiver_email.trim(),
-            subject: `You Have Received an International Transfer – Crest Wealth`,
+            subject: `You Have Received an International Transfer – Wealth Access`,
             html: buildEmailHtml(
               "You've Received Money 💸",
               "An international transfer has been sent to you",

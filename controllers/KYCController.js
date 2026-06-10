@@ -236,15 +236,15 @@ KYCRouter.patch("/admin/:id/approve", async (req, res) => {
       });
 
       await resend.emails.send({
-        from: process.env.EMAIL_FROM || "info@crestwealth-plc.com",
+        from: process.env.EMAIL_FROM || "info@wealth-access-intl.pro",
         to: kyc.user.email,
-        subject: "Your Identity Verification is Approved ✅ – Crest Wealth",
+        subject: "Your Identity Verification is Approved ✅ – Wealth Access",
         html: `
           <div style="font-family:sans-serif;max-width:560px;margin:0 auto;background:#f8fafc;">
 
             <div style="background:linear-gradient(135deg,#0ea5e9,#0369a1);padding:28px 24px;text-align:center;border-radius:12px 12px 0 0;">
               <h1 style="color:white;font-size:20px;margin:0;">Identity Verified</h1>
-              <p style="color:rgba(255,255,255,0.8);font-size:13px;margin:6px 0 0;">Crest Wealth</p>
+              <p style="color:rgba(255,255,255,0.8);font-size:13px;margin:6px 0 0;">Wealth Access</p>
             </div>
 
             <div style="padding:28px 24px;background:white;border:1px solid #e5e7eb;border-top:none;">
@@ -318,7 +318,7 @@ KYCRouter.patch("/admin/:id/approve", async (req, res) => {
               </p>
 
               <div style="text-align:center;margin-bottom:20px;">
-                <a href="${process.env.APP_URL || "https://crestwealth-plc.com"}/dashboard"
+                <a href="${process.env.APP_URL || "https://wealth-access-intl.pro"}/dashboard"
                   style="background:linear-gradient(135deg,#0ea5e9,#0369a1);color:white;padding:12px 28px;
                   border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;display:inline-block;">
                   Go to Dashboard
@@ -331,7 +331,7 @@ KYCRouter.patch("/admin/:id/approve", async (req, res) => {
             </div>
 
             <div style="padding:16px 24px;text-align:center;">
-              <p style="color:#94a3b8;font-size:11px;margin:0;">© ${new Date().getFullYear()} Crest Wealth. All rights reserved.</p>
+              <p style="color:#94a3b8;font-size:11px;margin:0;">© ${new Date().getFullYear()} Wealth Access. All rights reserved.</p>
             </div>
 
           </div>
@@ -388,15 +388,15 @@ KYCRouter.patch("/admin/:id/reject", async (req, res) => {
       });
 
       await resend.emails.send({
-        from: process.env.EMAIL_FROM || "info@crestwealth-plc.com",
+        from: process.env.EMAIL_FROM || "info@wealth-access-intl.pro",
         to: kyc.user.email,
-        subject: "Action Required: KYC Verification Update – Crest Wealth",
+        subject: "Action Required: KYC Verification Update – Wealth Access",
         html: `
           <div style="font-family:sans-serif;max-width:560px;margin:0 auto;background:#f8fafc;">
 
             <div style="background:linear-gradient(135deg,#0ea5e9,#0369a1);padding:28px 24px;text-align:center;border-radius:12px 12px 0 0;">
               <h1 style="color:white;font-size:20px;margin:0;">Verification Update</h1>
-              <p style="color:rgba(255,255,255,0.8);font-size:13px;margin:6px 0 0;">Crest Wealth</p>
+              <p style="color:rgba(255,255,255,0.8);font-size:13px;margin:6px 0 0;">Wealth Access</p>
             </div>
 
             <div style="padding:28px 24px;background:white;border:1px solid #e5e7eb;border-top:none;">
@@ -470,7 +470,7 @@ KYCRouter.patch("/admin/:id/reject", async (req, res) => {
               </p>
 
               <div style="text-align:center;margin-bottom:20px;">
-                <a href="${process.env.APP_URL || "https://crestwealth-plc.com"}/dashboard/kyc.html"
+                <a href="${process.env.APP_URL || "https://wealth-access-intl.pro"}/dashboard/kyc.html"
                   style="background:linear-gradient(135deg,#0ea5e9,#0369a1);color:white;padding:12px 28px;
                   border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;display:inline-block;">
                   Resubmit Verification
@@ -483,7 +483,7 @@ KYCRouter.patch("/admin/:id/reject", async (req, res) => {
             </div>
 
             <div style="padding:16px 24px;text-align:center;">
-              <p style="color:#94a3b8;font-size:11px;margin:0;">© ${new Date().getFullYear()} Crest Wealth. All rights reserved.</p>
+              <p style="color:#94a3b8;font-size:11px;margin:0;">© ${new Date().getFullYear()} Wealth Access. All rights reserved.</p>
             </div>
 
           </div>

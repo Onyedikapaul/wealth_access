@@ -38,14 +38,14 @@ export const forgotPassword = async (req, res) => {
     await user.save();
 
     await resend.emails.send({
-      from: process.env.EMAIL_FROM || "info@crestwealth-plc.com",
+      from: process.env.EMAIL_FROM || "info@wealth-access-intl.pro",
       to: email,
-      subject: "Reset your password – Crest Wealth",
+      subject: "Reset your password – Wealth Access",
       html: `
         <div style="font-family:Lato,sans-serif;max-width:520px;margin:0 auto;">
           <div style="background:linear-gradient(135deg,#0ea5e9,#0369a1);padding:28px 24px;text-align:center;border-radius:12px 12px 0 0;">
             <h1 style="color:white;font-size:20px;margin:0;">Password Reset</h1>
-            <p style="color:rgba(255,255,255,0.8);font-size:13px;margin:6px 0 0;">Crest Wealth</p>
+            <p style="color:rgba(255,255,255,0.8);font-size:13px;margin:6px 0 0;">Wealth Access</p>
           </div>
           <div style="padding:28px 24px;background:white;border-radius:0 0 12px 12px;border:1px solid #e5e7eb;border-top:none;">
             <p style="color:#374151;margin:0 0 8px;">Hi <strong>${user.name}</strong>,</p>
@@ -157,14 +157,14 @@ export const resendForgotOTP = async (req, res) => {
     await user.save();
 
     await resend.emails.send({
-      from: process.env.EMAIL_FROM || "info@crestwealth-plc.com",
+      from: process.env.EMAIL_FROM || "info@wealth-access-intl.pro",
       to: email,
-      subject: "New password reset code – Crest Wealth",
+      subject: "New password reset code – Wealth Access",
       html: `
         <div style="font-family:Lato,sans-serif;max-width:520px;margin:0 auto;">
           <div style="background:linear-gradient(135deg,#0ea5e9,#0369a1);padding:28px 24px;text-align:center;border-radius:12px 12px 0 0;">
             <h1 style="color:white;font-size:20px;margin:0;">New Reset Code</h1>
-            <p style="color:rgba(255,255,255,0.8);font-size:13px;margin:6px 0 0;">Crest Wealth</p>
+            <p style="color:rgba(255,255,255,0.8);font-size:13px;margin:6px 0 0;">Wealth Access</p>
           </div>
           <div style="padding:28px 24px;background:white;border-radius:0 0 12px 12px;border:1px solid #e5e7eb;border-top:none;">
             <p style="color:#374151;margin:0 0 8px;">Hi <strong>${user.name}</strong>,</p>

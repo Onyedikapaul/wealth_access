@@ -59,7 +59,7 @@ export const sendAdminEmailToUser = async (req, res) => {
       content: innerContent,
     });
 
-    const from = "Crest Wealth <info@crestwealth-plc.com>";
+    const from = "Wealth Access <info@wealth-access-intl.pro>";
     // ✅ Send (single user)
     const resp = await resend.emails.send({
       from,
